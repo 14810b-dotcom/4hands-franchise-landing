@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1A1A1A" />
+    <title>4hands · Франшиза студий маникюра и педикюра №1 в России</title>
+    <meta name="description" content="Откройте прибыльную студию маникюра и педикюра по франшизе 4hands. Уникальная технология «в 4 руки», поддержка на старте, окупаемость от 12 месяцев." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="4hands · Франшиза студий маникюра и педикюра №1 в России" />
+    <meta property="og:description" content="Уникальная технология «в 4 руки», поддержка на старте, окупаемость от 12 месяцев." />
+    <meta property="og:locale" content="ru_RU" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23A06DD4'/%3E%3Cstop offset='1' stop-color='%23ED2CEE'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='8' fill='%231A1A1A'/%3E%3Ctext x='50%25' y='59%25' font-family='Arial Black, sans-serif' font-weight='900' font-size='13' fill='url(%23g)' text-anchor='middle' dominant-baseline='middle'%3E4h%3C/text%3E%3C/svg%3E" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#FFFFFF',
+                        'bg-soft': '#F8F5FF',
+                        surface: '#FFFFFF',
+                        ink: '#1A1A1A',
+                        'ink-soft': '#3D3D3D',
+                        purple: '#7C3FAE',
+                        'purple-light': '#A06DD4',
+                        'purple-deep': '#5A2A82',
+                        pink: '#ED2CEE',
+                        'pink-light': '#F478F5',
+                        graphite: '#6B6B76',
+                    },
+                    fontFamily: {
+                        display: ['Wix Madefor Display', 'system-ui', 'sans-serif'],
+                        body: ['Wix Madefor Display', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- GSAP + ScrollTrigger via CDN, defer = non-blocking -->
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script defer src="main.js"></script>
+</head>
+<body>
+
+<!-- Scroll progress + sticky nav -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header class="sticky-nav" id="stickyNav" aria-label="Основная навигация">
+    <div class="sticky-nav-inner">
+        <a href="#top" class="logo" aria-label="4hands — на главную">
+            <span class="logo-dot"></span>
+            <span>4hands</span>
+        </a>
+        <nav class="sticky-nav-links" aria-label="Разделы">
+            <a href="#testdrive">Тест-драйв</a>
+            <a href="#formats">Форматы</a>
+            <a href="#composition">Взнос</a>
+            <a href="#cases">Кейсы</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <a href="tel:+79917770596" class="sticky-nav-phone hide-mobile">+7&nbsp;991&nbsp;777-05-96</a>
+        <a href="#capture" class="btn btn-dark btn-sm">Получить материалы</a>
+    </div>
+</header>
+
+<!-- Custom cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<main id="top">
+
+    <!-- ====================================================================
+         SCREEN 1 — HERO
+         ==================================================================== -->
+    <section class="hero" aria-label="Франшиза 4hands — главный экран">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-noise" aria-hidden="true"></div>
+        <div class="hero-orb o1" aria-hidden="true" data-parallax="0.3"></div>
+        <div class="hero-orb o2" aria-hidden="true" data-parallax="0.15"></div>
+
+        <div class="container">
+            <div class="hero-grid">
+
+                <div>
+                    <div class="logo" style="margin-bottom: 32px;">
+                        <span class="logo-dot"></span>
+                        <span>4hands · франшиза</span>
+                    </div>
+
+                    <span class="h-eyebrow">№1 в России · 200+ студий</span>
+
+                    <h1 class="h1 text-balance" style="margin-top: 20px;">
+                        Франшиза студий маникюра и&nbsp;педикюра: 200 точек — 67% партнёров открывают второй салон
+                    </h1>
+
+                    <p class="lead text-pretty" style="margin-top: 24px;">
+                        Зарабатывайте на&nbsp;высокой возвращаемости клиентов. Уникальная технология «в&nbsp;4&nbsp;руки», поддержка на&nbsp;старте и&nbsp;полная запись с&nbsp;первого дня.
+                    </p>
+
+                    <div class="metrics" data-reveal>
+                        <div class="metric">
+                            <div class="metric-label">Инвестиции</div>
+                            <div class="metric-value">
+                                от <span class="counter" data-counter-to="2.5" data-counter-decimals="1">2.5</span><span class="metric-suffix"> млн ₽</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Паушальный взнос</div>
+                            <div class="metric-value">
+                                от <span class="counter" data-counter-to="650">650</span><span class="metric-suffix"> 000 ₽</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Окупаемость</div>
+                            <div class="metric-value">
+                                от <span class="counter" data-counter-to="12">12</span><span class="metric-suffix"> месяцев</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-cta-row">
+                        <a href="#capture" class="btn btn-primary">
+                            Получить финансовую модель
+                            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                        <a href="#formats" class="btn btn-ghost">
+                            Узнать форматы
+                        </a>
+                    </div>
+
+                    <div class="hero-trust">
+                        <div class="hero-trust-avatars" aria-hidden="true">
+                            <span></span><span></span><span></span><span></span>
+                        </div>
+                        <div>200+ партнёров · 17&nbsp;лет бренду · средняя чистая прибыль 458&nbsp;000&nbsp;₽/мес</div>
+                    </div>
+                </div>
+
+                <div class="hide-mobile" data-reveal>
+                    <div class="hero-image-frame" data-tilt>
+                        <!-- placeholder for future hero photo / video -->
+                        <div class="hero-image-badge">
+                            <div style="width:36px;height:36px;border-radius:50%;background:var(--grad-cta);display:grid;place-items:center;flex-shrink:0;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+                            </div>
+                            <div>
+                                <div style="font-weight:600;">Запись на&nbsp;месяц вперёд</div>
+                                <div style="font-size:12px;color:var(--c-graphite);">94% возвращаемость клиентов</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="scroll-cue" aria-hidden="true">
+            <span>Scroll</span>
+            <div class="scroll-cue-bar"></div>
+        </div>
+    </section>
+
+    <!-- Marquee strip -->
+    <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+            <span class="marquee-item">200+ студий <span class="dot"></span></span>
+            <span class="marquee-item">№1 в России <span class="dot"></span></span>
+            <span class="marquee-item">Технология «в 4 руки» <span class="dot"></span></span>
+            <span class="marquee-item">Окупаемость от 12 месяцев <span class="dot"></span></span>
+            <span class="marquee-item">Поддержка 360° <span class="dot"></span></span>
+            <span class="marquee-item">200+ студий <span class="dot"></span></span>
+            <span class="marquee-item">№1 в России <span class="dot"></span></span>
+            <span class="marquee-item">Технология «в 4 руки» <span class="dot"></span></span>
+            <span class="marquee-item">Окупаемость от 12 месяцев <span class="dot"></span></span>
+            <span class="marquee-item">Поддержка 360° <span class="dot"></span></span>
+        </div>
+    </div>
+
+    <!-- ====================================================================
+         BLOCK: TEST DRIVE
+         ==================================================================== -->
+    <section class="section testdrive-section" id="testdrive" aria-label="Тест-драйв франшизы" style="background: linear-gradient(180deg, #FFFFFF 0%, #F8F5FF 100%);">
+        <div class="container">
+            <div class="testdrive-inner">
+
+                <div class="testdrive-left" data-reveal>
+                    <span class="h-eyebrow">Тест-драйв · 9-й поток открыт</span>
+                    <h2 class="h2 text-balance" style="margin-top: 12px;">
+                        3 дня в реальном салоне — до&nbsp;покупки франшизы
+                    </h2>
+                    <p class="lead" style="margin-top: 16px;">
+                        Посмотри изнутри: клиентский поток, работу мастеров, кассу, ощущения. Без обязательств и без аванса.
+                    </p>
+
+                    <div class="testdrive-days">
+                        <div class="testdrive-day">
+                            <div class="testdrive-day-num">01</div>
+                            <div>
+                                <div class="testdrive-day-title">Погружение</div>
+                                <div class="testdrive-day-desc">Работаешь в роли хостес: встречаешь клиентов, наблюдаешь за процессом «в 4 руки», задаёшь вопросы мастерам.</div>
+                            </div>
+                        </div>
+                        <div class="testdrive-day">
+                            <div class="testdrive-day-num">02</div>
+                            <div>
+                                <div class="testdrive-day-title">Операционка</div>
+                                <div class="testdrive-day-desc">Смотришь на учёт, кассу, запись в YCLIENTS. Понимаешь, как работает фин. модель в реальных числах.</div>
+                            </div>
+                        </div>
+                        <div class="testdrive-day">
+                            <div class="testdrive-day-num">03</div>
+                            <div>
+                                <div class="testdrive-day-title">Встреча с командой</div>
+                                <div class="testdrive-day-desc">Обсуждаете твой город, финансовую модель и конкретный план запуска с региональным менеджером.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testdrive-cta-row">
+                        <a href="#capture" class="btn btn-primary">
+                            Записаться на тест-драйв
+                            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </a>
+                        <span class="testdrive-free">0 ₽ · без обязательств</span>
+                    </div>
+                </div>
+
+                <div class="testdrive-right" data-reveal>
+                    <div class="testdrive-stats-card">
+                        <div class="testdrive-badge">Идёт набор</div>
+                        <div class="testdrive-stat-big">
+                            <div class="testdrive-stat-val">9-й</div>
+                            <div class="testdrive-stat-lbl">поток программы</div>
+                        </div>
+                        <div class="testdrive-stat-big">
+                            <div class="testdrive-stat-val">186</div>
+                            <div class="testdrive-stat-lbl">участников прошло</div>
+                        </div>
+                        <div class="testdrive-stat-big">
+                            <div class="testdrive-stat-val">3 дня</div>
+                            <div class="testdrive-stat-lbl">в действующем салоне</div>
+                        </div>
+                        <div class="testdrive-quote">
+                            «После тест-драйва вопрос "покупать или нет" отпал сам собой»
+                            <span class="testdrive-quote-author">— Мария, Краснодар</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 2 — PATH TO LAUNCH (GSAP scroll-scrub)
+         ==================================================================== -->
+    <section class="path-section" id="path" aria-label="Путь запуска студии">
+
+        <div class="container">
+            <div class="section-head" style="padding-block: 64px 32px;" data-reveal>
+                <span class="h-eyebrow">Путь запуска</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Берём все сложные этапы на&nbsp;себя
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    От пустого помещения до&nbsp;первой выручки за&nbsp;90&nbsp;дней. Вы не&nbsp;ремонтируете, не&nbsp;нанимаете и&nbsp;не&nbsp;ищете клиентов с&nbsp;нуля&nbsp;— это уже сделано.
+                </p>
+            </div>
+        </div>
+
+        <!-- Desktop: pinned scroll-scrub -->
+        <div class="path-desktop">
+            <div id="pathTrack" style="height: 400vh; position: relative;">
+                <div class="path-pin" id="pathPin">
+                    <div class="path-stage" id="pathStage">
+                        <div class="path-layer l1" data-step="1"></div>
+                        <div class="path-layer l2" data-step="2"></div>
+                        <div class="path-layer l3" data-step="3">
+                            <div class="path-layer l3-content">
+                                <div class="chair"></div>
+                                <div class="chair"></div>
+                                <div class="chair"></div>
+                            </div>
+                        </div>
+                        <div class="path-layer l4" data-step="4">
+                            <div class="path-layer l4-content">
+                                <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                                <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                                <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                            </div>
+                            <div class="glow"></div>
+                        </div>
+                        <div class="path-stage-shine" aria-hidden="true"></div>
+                    </div>
+
+                    <div class="path-steps" id="pathSteps">
+                        <div class="path-step is-active" data-step="1">
+                            <div class="path-step-num">1</div>
+                            <div>
+                                <div class="path-step-title">Локация и&nbsp;аренда</div>
+                                <div class="path-step-desc">Подбираем помещение по&nbsp;трафику и&nbsp;ведём переговоры с&nbsp;арендодателем.</div>
+                            </div>
+                        </div>
+                        <div class="path-step" data-step="2">
+                            <div class="path-step-num">2</div>
+                            <div>
+                                <div class="path-step-title">Ремонт и&nbsp;дизайн</div>
+                                <div class="path-step-desc">Делаем ремонт по&nbsp;стандартам бренда и&nbsp;утверждаем дизайн-проект.</div>
+                            </div>
+                        </div>
+                        <div class="path-step" data-step="3">
+                            <div class="path-step-num">3</div>
+                            <div>
+                                <div class="path-step-title">Оснащение</div>
+                                <div class="path-step-desc">Кресла-реклайнеры, столы и&nbsp;инструмент 4hands&nbsp;— фирменное оборудование.</div>
+                            </div>
+                        </div>
+                        <div class="path-step" data-step="4">
+                            <div class="path-step-num">4</div>
+                            <div>
+                                <div class="path-step-title">Маркетинг и&nbsp;первая выручка</div>
+                                <div class="path-step-desc">Запускаем рекламу и&nbsp;CRM&nbsp;— салон открывается с&nbsp;полной записью.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile fallback: stacked cards -->
+        <div class="path-mobile container" style="padding-block: 0 64px;">
+            <div class="path-mobile-card" data-step="1">
+                <div class="path-mobile-stage">
+                    <div class="path-layer l1" style="opacity:1;"></div>
+                </div>
+                <div class="path-mobile-body">
+                    <div class="path-step-num" style="margin-bottom: 12px;">1</div>
+                    <div class="path-step-title">Локация и аренда</div>
+                    <div class="path-step-desc" style="margin-top: 6px;">Подбираем помещение и ведём переговоры.</div>
+                </div>
+            </div>
+            <div class="path-mobile-card" data-step="2">
+                <div class="path-mobile-stage">
+                    <div class="path-layer l2" style="opacity:1;"></div>
+                </div>
+                <div class="path-mobile-body">
+                    <div class="path-step-num" style="margin-bottom: 12px;">2</div>
+                    <div class="path-step-title">Ремонт и дизайн</div>
+                    <div class="path-step-desc" style="margin-top: 6px;">Ремонт по стандартам 4hands.</div>
+                </div>
+            </div>
+            <div class="path-mobile-card" data-step="3">
+                <div class="path-mobile-stage" style="background:linear-gradient(180deg,#f5e5d5,#e8d4bf);">
+                    <div class="path-layer l3" style="opacity:1;">
+                        <div class="path-layer l3-content">
+                            <div class="chair"></div>
+                            <div class="chair"></div>
+                            <div class="chair"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="path-mobile-body">
+                    <div class="path-step-num" style="margin-bottom: 12px;">3</div>
+                    <div class="path-step-title">Оснащение</div>
+                    <div class="path-step-desc" style="margin-top: 6px;">Фирменная мебель и инструмент.</div>
+                </div>
+            </div>
+            <div class="path-mobile-card" data-step="4">
+                <div class="path-mobile-stage" style="background:linear-gradient(180deg,#f5e5d5,#e8d4bf);">
+                    <div class="path-layer l4" style="opacity:1;">
+                        <div class="path-layer l4-content">
+                            <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                            <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                            <div class="person"><div class="person-head"></div><div class="person-body"></div></div>
+                        </div>
+                        <div class="glow"></div>
+                    </div>
+                </div>
+                <div class="path-mobile-body">
+                    <div class="path-step-num" style="margin-bottom: 12px;">4</div>
+                    <div class="path-step-title">Маркетинг и&nbsp;первая выручка</div>
+                    <div class="path-step-desc" style="margin-top: 6px;">Открытие с&nbsp;полной записью.</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 3 — WHY 4hands (comparison)
+         ==================================================================== -->
+    <section class="section" id="why" aria-label="Почему 4hands">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">Почему 4hands</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Открыть студию в&nbsp;одиночку дороже, чем&nbsp;кажется
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Сравните&nbsp;— и&nbsp;увидите, почему 200 предпринимателей выбрали запуск с&nbsp;нами, а&nbsp;не&nbsp;«с&nbsp;нуля».
+                </p>
+            </div>
+
+            <div class="compare-grid">
+
+                <article class="card" data-reveal>
+                    <span class="tag-pill" style="background: rgba(181, 69, 58, 0.1); color: var(--c-error);">Открыть самой</span>
+                    <h3 class="h3" style="margin-top: 16px;">С&nbsp;нуля и&nbsp;на&nbsp;свой страх</h3>
+                    <p class="text-muted" style="margin-top: 8px;">Каждое решение&nbsp;— риск. Учитесь на&nbsp;своих ошибках и&nbsp;своём бюджете.</p>
+
+                    <ul class="compare-list">
+                        <li class="compare-item bad">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                            </span>
+                            <span>Слив бюджета на&nbsp;ремонт без&nbsp;стандартов</span>
+                        </li>
+                        <li class="compare-item bad">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                            </span>
+                            <span>Текучка мастеров и&nbsp;поиск без&nbsp;воронки</span>
+                        </li>
+                        <li class="compare-item bad">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                            </span>
+                            <span>Маркетинг с&nbsp;нуля&nbsp;— первые 6&nbsp;месяцев в&nbsp;минусе</span>
+                        </li>
+                        <li class="compare-item bad">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                            </span>
+                            <span>Нет узнаваемости&nbsp;— клиенты идут к&nbsp;конкурентам</span>
+                        </li>
+                        <li class="compare-item bad">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+                            </span>
+                            <span>Нет проверенной фин. модели&nbsp;— цифры наугад</span>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="card-dark format-card is-premium" data-reveal>
+                    <span class="tag-pill tag-pill-dark">★ Бренд №1</span>
+                    <h3 class="h3" style="margin-top: 16px; color: var(--c-ivory);">Франшиза 4hands</h3>
+                    <p style="margin-top: 8px; color: rgba(250,247,242,0.7);">Готовая система. Прибыль с&nbsp;первого месяца после открытия.</p>
+
+                    <ul class="compare-list">
+                        <li class="compare-item good">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Готовый бренд №1 и&nbsp;узнаваемость в&nbsp;200+ городах</span>
+                        </li>
+                        <li class="compare-item good">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Обучение мастеров «в&nbsp;4&nbsp;руки» — рост выручки×2</span>
+                        </li>
+                        <li class="compare-item good">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Финмодель проверена 200+ запусками</span>
+                        </li>
+                        <li class="compare-item good">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Полная запись с&nbsp;первого дня&nbsp;— маркетинг под&nbsp;ключ</span>
+                        </li>
+                        <li class="compare-item good">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Поддержка 360°: от&nbsp;CRM до&nbsp;поставок</span>
+                        </li>
+                    </ul>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 4 — FORMATS / ECONOMICS
+         ==================================================================== -->
+    <section class="section" id="formats" style="background: linear-gradient(180deg, #FFFFFF, #F8F5FF);" aria-label="Форматы франшизы">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">Форматы и&nbsp;экономика</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Два формата&nbsp;— под&nbsp;ваш город
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Регионы или столицы&nbsp;— фин. модель адаптируется. Выбирайте формат и&nbsp;считайте прибыль для&nbsp;своего города.
+                </p>
+            </div>
+
+            <div class="formats-grid">
+
+                <article class="card-glossy format-card" data-reveal data-format="regions">
+                    <span class="tag-pill">Регионы</span>
+                    <h3 class="h3" style="margin-top: 16px;">Города от&nbsp;100&nbsp;000 жителей</h3>
+                    <p class="text-muted" style="margin-top: 8px;">Оптимальный старт с&nbsp;быстрой окупаемостью.</p>
+
+                    <div class="price-row">
+                        <div>
+                            <div class="price-cell-label">Паушальный взнос</div>
+                            <div class="price-cell-value">от 650 000 ₽</div>
+                        </div>
+                        <div>
+                            <div class="price-cell-label">Инвестиции</div>
+                            <div class="price-cell-value">от 2,5 млн ₽</div>
+                        </div>
+                    </div>
+
+                    <ul class="format-includes">
+                        <li>Площадь от&nbsp;60&nbsp;м²</li>
+                        <li>4–6 рабочих мест</li>
+                        <li>Окупаемость от&nbsp;12&nbsp;месяцев</li>
+                        <li>Роялти 4% от&nbsp;оборота</li>
+                    </ul>
+
+                    <button class="btn btn-primary" data-cta-format data-format-name="Регионы">
+                        Рассчитать прибыль для&nbsp;моего города
+                        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                    </button>
+                </article>
+
+                <article class="card-dark format-card is-premium" data-reveal data-format="msk-spb">
+                    <span class="tag-pill tag-pill-dark">★ Premium · Москва и&nbsp;СПб</span>
+                    <h3 class="h3" style="margin-top: 16px; color: var(--c-ivory);">Столичный формат</h3>
+                    <p style="margin-top: 8px; color: rgba(250,247,242,0.7);">Премиум-локации, средний чек выше&nbsp;на&nbsp;40%.</p>
+
+                    <div class="price-row">
+                        <div>
+                            <div class="price-cell-label">Паушальный взнос</div>
+                            <div class="price-cell-value">от 990 000 ₽</div>
+                        </div>
+                        <div>
+                            <div class="price-cell-label">Инвестиции</div>
+                            <div class="price-cell-value">от 3,5 млн ₽</div>
+                        </div>
+                    </div>
+
+                    <ul class="format-includes">
+                        <li>Площадь от&nbsp;80&nbsp;м²</li>
+                        <li>6–8 рабочих мест</li>
+                        <li>Окупаемость от&nbsp;14&nbsp;месяцев</li>
+                        <li>Роялти 5% от&nbsp;оборота</li>
+                    </ul>
+
+                    <button class="btn btn-primary" data-cta-format data-format-name="Москва и СПб">
+                        Рассчитать прибыль для&nbsp;моего города
+                        <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                    </button>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 5 — SUPPORT (What's included)
+         ==================================================================== -->
+    <section class="section" id="support" aria-label="Что входит в франшизу">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">Поддержка 360°</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Что входит в&nbsp;франшизу
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Шесть систем, которые забирают у&nbsp;вас рутину и&nbsp;оставляют только управление прибылью.
+                </p>
+            </div>
+
+            <div class="bento">
+                <article class="bento-tile lg dark" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M3 12L12 4l9 8M5 10v10h14V10"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title" style="color: var(--c-ivory);">Подбор локации — без&nbsp;рисков аренды</div>
+                        <div class="bento-desc">Анализируем трафик по&nbsp;геоданным, ведём переговоры с&nbsp;арендодателем и&nbsp;защищаем вас от&nbsp;кабальных условий договора. Вы не&nbsp;тратите время — мы уже знаем, где продаётся маникюр.</div>
+                        <div class="bento-stat" style="margin-top:16px; color:rgba(248,245,255,0.6); font-size:12px;">200+ локаций отсмотрено · 94% студий прибыльны с 1-го года</div>
+                    </div>
+                </article>
+
+                <article class="bento-tile md" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M4 19V5h16v14M4 19h16M9 19V9h6v10"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title">Дизайн-проект под ключ</div>
+                        <div class="bento-desc">Готовые визуализации, технические чертежи и авторский надзор при ремонте. Ремонт без&nbsp;сюрпризов и&nbsp;переделок — бюджет строго в&nbsp;рамках сметы.</div>
+                    </div>
+                </article>
+
+                <article class="bento-tile sm" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M12 2v4M12 18v4M4 12H2M22 12h-2M5.5 5.5l2 2M16.5 16.5l2 2M5.5 18.5l2-2M16.5 7.5l2-2"/><circle cx="12" cy="12" r="4"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title">Обучение = ×2 к выручке</div>
+                        <div class="bento-desc">Технология «в&nbsp;4&nbsp;руки» осваивается за&nbsp;5&nbsp;смен. С&nbsp;одного кресла — выручка в&nbsp;2&nbsp;раза выше, чем у&nbsp;конкурентов.</div>
+                    </div>
+                </article>
+
+                <article class="bento-tile sm" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M3 12l3-7h12l3 7M5 12v8h14v-8M9 16h6"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title">Маркетинг до открытия</div>
+                        <div class="bento-desc">Настроенные кабинеты, контент и&nbsp;первые клиенты — ещё до&nbsp;дня открытия. Полная запись в&nbsp;первую неделю.</div>
+                    </div>
+                </article>
+
+                <article class="bento-tile sm" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title">CRM: 94% возвращаемость</div>
+                        <div class="bento-desc">YCLIENTS с&nbsp;онлайн-записью, программой лояльности и&nbsp;аналитикой. Клиент возвращается каждые 2&nbsp;недели сам.</div>
+                    </div>
+                </article>
+
+                <article class="bento-tile sm" data-reveal>
+                    <div class="bento-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+                    </div>
+                    <div>
+                        <div class="bento-title">Поставки без переплат</div>
+                        <div class="bento-desc">Расходники и&nbsp;инструмент по&nbsp;оптовым ценам торгового дома 4hands — в&nbsp;2–3&nbsp;раза дешевле розницы.</div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         BLOCK: FRANCHISE COMPOSITION (Паушальный взнос)
+         ==================================================================== -->
+    <section class="section" id="composition" aria-label="Состав паушального взноса" style="background: linear-gradient(180deg, #F8F5FF 0%, #FFFFFF 100%);">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">Паушальный взнос BASE</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    990 000 ₽ — и вот что вы получаете
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Единовременная сумма за право стать партнёром 4hands. Включает не только бренд — но и полную систему запуска.
+                </p>
+            </div>
+
+            <div class="composition-grid" data-reveal>
+
+                <div class="composition-col">
+                    <div class="composition-group-title">Бренд и право</div>
+                    <ul class="composition-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Право пользования брендом (регистрация Роспатент)
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Размещение на&nbsp;4hands.ru — федеральный трафик
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Персональный лендинг студии + SEO интеграции
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Участие в ТВ-программах и медиа-размещениях бренда
+                        </li>
+                    </ul>
+
+                    <div class="composition-group-title" style="margin-top: 28px;">Технологии и обучение</div>
+                    <ul class="composition-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Корпоративный университет 4hands — обучение мастеров и управляющих
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            AI-ассистент 24/7 — ответы на вопросы по стандартам и операционке
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            CRM YCLIENTS — настройка, интеграция, обучение персонала
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="composition-col">
+                    <div class="composition-group-title">Поддержка запуска</div>
+                    <ul class="composition-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Территориальный менеджер — ведёт от договора до открытия
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Юридическая и бухгалтерская поддержка на старте
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Архитектурный проект — дизайн и технические чертежи
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Маркетинговая стратегия открытия — рекламные кабинеты, креативы
+                        </li>
+                    </ul>
+
+                    <div class="composition-group-title" style="margin-top: 28px;">Сервисы и инфраструктура</div>
+                    <ul class="composition-list">
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            GEO-сервисы (Яндекс, 2ГИС, Google) — в 4 раза дешевле рынка
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Колл-центр 4hands — обработка входящих и запись клиентов
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Мобильное приложение 4hands — база лояльных клиентов с первого дня
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="var(--c-purple)" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            Доступ к торговому дому — расходники по оптовым ценам
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="composition-cta" data-reveal>
+                <div class="composition-price-block">
+                    <div class="composition-price-label">Паушальный взнос</div>
+                    <div class="composition-price-val">от 650 000 ₽</div>
+                    <div class="composition-price-note">Регионы · разово · без роялти первые 2 месяца</div>
+                </div>
+                <div class="composition-price-block composition-price-block--premium">
+                    <div class="composition-price-label">Паушальный взнос</div>
+                    <div class="composition-price-val">990 000 ₽</div>
+                    <div class="composition-price-note">Москва, СПб · BASE-пакет · полный состав выше</div>
+                </div>
+                <a href="#capture" class="btn btn-primary" style="align-self: center;">
+                    Получить полный договор
+                    <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 6 — CASES / Partners slider
+         ==================================================================== -->
+    <section class="section" id="cases" style="background: #F8F5FF;" aria-label="Кейсы партнёров">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">Кейсы партнёров</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Реальные истории запуска
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Цифры от&nbsp;партнёров, которые открылись в&nbsp;прошлом году. <!-- TODO: replace with verified data --->
+                </p>
+            </div>
+        </div>
+
+        <div class="cases-wrap" data-reveal>
+            <div class="cases-track" id="casesTrack">
+
+                <!-- TODO: replace with real cases -->
+                <article class="case-card">
+                    <div class="case-photo">
+                        <span class="badge">Казань</span>
+                    </div>
+                    <div class="case-body">
+                        <div>
+                            <div class="case-name">Анна Корнилова</div>
+                            <div class="case-city">Казань · открылась в&nbsp;марте 2025</div>
+                        </div>
+                        <div class="case-stats">
+                            <div><div class="case-stat-label">Запуск</div><div class="case-stat-value">82 дня</div></div>
+                            <div><div class="case-stat-label">В&nbsp;плюс</div><div class="case-stat-value">2 мес.</div></div>
+                            <div><div class="case-stat-label">Чистая</div><div class="case-stat-value">410 т₽</div></div>
+                        </div>
+                        <p class="case-quote">Команда вела меня от&nbsp;аренды до&nbsp;первой смены — мне оставалось только подписывать.</p>
+                    </div>
+                </article>
+
+                <article class="case-card">
+                    <div class="case-photo" style="background: linear-gradient(135deg, #f3e2cf, #d89a82);">
+                        <span class="badge">Краснодар</span>
+                    </div>
+                    <div class="case-body">
+                        <div>
+                            <div class="case-name">Мария Левчук</div>
+                            <div class="case-city">Краснодар · открылась в&nbsp;июне 2025</div>
+                        </div>
+                        <div class="case-stats">
+                            <div><div class="case-stat-label">Запуск</div><div class="case-stat-value">68 дней</div></div>
+                            <div><div class="case-stat-label">В&nbsp;плюс</div><div class="case-stat-value">1 мес.</div></div>
+                            <div><div class="case-stat-label">Чистая</div><div class="case-stat-value">520 т₽</div></div>
+                        </div>
+                        <p class="case-quote">Полная запись на&nbsp;месяц вперёд уже к&nbsp;четвёртой неделе.</p>
+                    </div>
+                </article>
+
+                <article class="case-card">
+                    <div class="case-photo" style="background: linear-gradient(135deg, #ece1d3, #c4a890);">
+                        <span class="badge">Санкт-Петербург</span>
+                    </div>
+                    <div class="case-body">
+                        <div>
+                            <div class="case-name">Юлия Корнева</div>
+                            <div class="case-city">СПб · открылась в&nbsp;августе 2024</div>
+                        </div>
+                        <div class="case-stats">
+                            <div><div class="case-stat-label">Запуск</div><div class="case-stat-value">94 дня</div></div>
+                            <div><div class="case-stat-label">В&nbsp;плюс</div><div class="case-stat-value">3 мес.</div></div>
+                            <div><div class="case-stat-label">Чистая</div><div class="case-stat-value">780 т₽</div></div>
+                        </div>
+                        <p class="case-quote">К концу года открыла вторую точку&nbsp;— уже без&nbsp;опасений.</p>
+                    </div>
+                </article>
+
+                <article class="case-card">
+                    <div class="case-photo" style="background: linear-gradient(135deg, #f5e9da, #e0c4ad);">
+                        <span class="badge">Новосибирск</span>
+                    </div>
+                    <div class="case-body">
+                        <div>
+                            <div class="case-name">Екатерина Лысенко</div>
+                            <div class="case-city">Новосибирск · открылась в&nbsp;октябре 2024</div>
+                        </div>
+                        <div class="case-stats">
+                            <div><div class="case-stat-label">Запуск</div><div class="case-stat-value">76 дней</div></div>
+                            <div><div class="case-stat-label">В&nbsp;плюс</div><div class="case-stat-value">2 мес.</div></div>
+                            <div><div class="case-stat-label">Чистая</div><div class="case-stat-value">450 т₽</div></div>
+                        </div>
+                        <p class="case-quote">Маркетинг от&nbsp;команды дал поток клиентов с&nbsp;первой недели.</p>
+                    </div>
+                </article>
+
+                <article class="case-card">
+                    <div class="case-photo" style="background: linear-gradient(135deg, #ead8c6, #cba98f);">
+                        <span class="badge">Екатеринбург</span>
+                    </div>
+                    <div class="case-body">
+                        <div>
+                            <div class="case-name">Ольга Иванникова</div>
+                            <div class="case-city">Екатеринбург · открылась в&nbsp;январе 2025</div>
+                        </div>
+                        <div class="case-stats">
+                            <div><div class="case-stat-label">Запуск</div><div class="case-stat-value">88 дней</div></div>
+                            <div><div class="case-stat-label">В&nbsp;плюс</div><div class="case-stat-value">2 мес.</div></div>
+                            <div><div class="case-stat-label">Чистая</div><div class="case-stat-value">490 т₽</div></div>
+                        </div>
+                        <p class="case-quote">Никогда не&nbsp;управляла салоном&nbsp;— вошла в&nbsp;роль за&nbsp;месяц.</p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="cases-controls">
+                <button class="cases-arrow" id="casesPrev" aria-label="Предыдущий кейс">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4l-6 6 6 6"/></svg>
+                </button>
+                <button class="cases-arrow" id="casesNext" aria-label="Следующий кейс">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 4l6 6-6 6"/></svg>
+                </button>
+            </div>
+
+            <div style="margin-top: 36px; text-align: center;" data-reveal>
+                <a href="#capture" class="btn btn-ghost">Смотреть больше историй</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 7 — FOUNDER
+         ==================================================================== -->
+    <section class="section" id="founder" aria-label="Основатель бренда">
+        <div class="container">
+
+            <div class="founder-grid">
+
+                <div data-reveal>
+                    <div class="founder-portrait" data-tilt>
+                        <!-- TODO: replace with real founder photo -->
+                    </div>
+                </div>
+
+                <div data-reveal>
+                    <span class="h-eyebrow">Основатель бренда</span>
+                    <p class="founder-quote" style="margin-top: 20px;">
+                        Мы строим сеть не&nbsp;ради количества точек. Мы строим систему, в&nbsp;которой партнёр спокойно спит, а&nbsp;клиент возвращается каждые две&nbsp;недели.
+                    </p>
+                    <div class="founder-meta">
+                        <div style="width:48px;height:48px;border-radius:50%;background:var(--grad-cta);box-shadow:var(--shadow-card);"></div>
+                        <div>
+                            <div class="founder-name">Алина Сергеева</div>
+                            <div class="founder-role">Основатель и&nbsp;CEO 4hands</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         BLOCK: COMPANY HISTORY
+         ==================================================================== -->
+    <section class="section history-section" id="history" aria-label="История компании 4hands" style="background: #F8F5FF;">
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <span class="h-eyebrow">История бренда</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    17 лет опыта — ваш фундамент
+                </h2>
+                <p class="lead" style="margin-top: 16px;">
+                    Технология, которую вы получаете, создавалась не в офисе — а в реальных салонах с&nbsp;реальными клиентами.
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" data-reveal style="--reveal-delay: 0s">
+                    <div class="timeline-year timeline-year--current">2025</div>
+                    <div class="timeline-dot timeline-dot--current"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">200+ студий · 85 городов · №1 в РФ</div>
+                        <div class="timeline-desc">Крупнейшая сеть маникюра-педикюра в России. Средняя чистая прибыль партнёра — 458 000 ₽/месяц. Рекорд выручки в Москве — 4 644 753 ₽.</div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal style="--reveal-delay: 0.1s">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Международный выход</div>
+                        <div class="timeline-desc">Открытие студии в Калифорнии (США). Подтверждение масштабируемости модели за пределами России.</div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal style="--reveal-delay: 0.18s">
+                    <div class="timeline-year">2019</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">50 студий по всей России</div>
+                        <div class="timeline-desc">Масштабирование и запуск единых стандартов. Интеграция с YCLIENTS, централизованный маркетинг и мобильное приложение.</div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal style="--reveal-delay: 0.26s">
+                    <div class="timeline-year">2016</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Старт франшизы</div>
+                        <div class="timeline-desc">Первые франчайзи открыли студии в регионах. Проверка модели в разных рынках — от малых городов до миллионников.</div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-reveal style="--reveal-delay: 0.34s">
+                    <div class="timeline-year">2012</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Технология зарегистрирована</div>
+                        <div class="timeline-desc">Методика «в 4 руки» запатентована. Создан учебный центр — первая программа сертификации мастеров.</div>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-item--last" data-reveal style="--reveal-delay: 0.42s">
+                    <div class="timeline-year">2008</div>
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Первая студия в Москве</div>
+                        <div class="timeline-desc">Открытие флагмана. Появление концепции «в 4 руки» — два мастера работают одновременно, экономя клиенту 1,5 часа.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 8 — FAQ
+         ==================================================================== -->
+    <section class="section" id="faq" style="background: linear-gradient(180deg, #FFFFFF, #F8F5FF);" aria-label="Частые вопросы">
+        <div class="container">
+            <div class="section-head" data-reveal style="text-align: center; margin-inline: auto;">
+                <span class="h-eyebrow">FAQ</span>
+                <h2 class="h2 text-balance" style="margin-top: 12px;">
+                    Частые вопросы партнёров
+                </h2>
+            </div>
+
+            <div class="faq-list">
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Какой размер роялти?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>Для регионов&nbsp;— 4% от&nbsp;месячного оборота, для&nbsp;Москвы и&nbsp;СПб&nbsp;— 5%. Первые 2&nbsp;месяца после открытия&nbsp;— без&nbsp;роялти.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Какие гарантии возврата инвестиций?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>Прямых гарантий выручки рынок не&nbsp;даёт. Мы даём фин. модель на&nbsp;основе 200+ запусков с&nbsp;диапазоном окупаемости 12–18 месяцев и&nbsp;систему поддержки до&nbsp;выхода в&nbsp;плюс.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Как происходит подбор и&nbsp;обучение мастеров?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>Запускаем воронку найма за&nbsp;30&nbsp;дней до&nbsp;открытия. Обучение&nbsp;— очно или в&nbsp;нашем учебном центре. Технология «в&nbsp;4&nbsp;руки» осваивается за&nbsp;5&nbsp;смен.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Что в&nbsp;договоре?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>Договор коммерческой концессии (ДКК), регистрация в&nbsp;Роспатенте. Срок 5&nbsp;лет с&nbsp;автопродлением. Полный пакет вышлем после знакомства.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Сколько занимает запуск?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>Среднее время от&nbsp;подписания договора до&nbsp;открытия&nbsp;— 75–90&nbsp;дней. Максимум 120&nbsp;дней с&nbsp;учётом сложного ремонта.</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="faq-item" data-reveal>
+                    <summary class="faq-summary">
+                        Какие реальные сроки окупаемости?
+                        <span class="faq-chevron" aria-hidden="true">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2v10M2 7h10"/></svg>
+                        </span>
+                    </summary>
+                    <div class="faq-body">
+                        <div class="faq-body-inner">
+                            <p>В регионах&nbsp;— 12–15&nbsp;месяцев, в&nbsp;Москве и&nbsp;СПб&nbsp;— 14–18&nbsp;месяцев. Сильно зависит от&nbsp;локации&nbsp;— рассчитываем индивидуально.</p>
+                        </div>
+                    </div>
+                </details>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================================
+         SCREEN 9 — FINAL CAPTURE
+         ==================================================================== -->
+    <section class="section capture" id="capture" aria-label="Получить материалы франшизы">
+        <div class="container">
+
+            <div class="capture-grid">
+
+                <div data-reveal>
+                    <span class="h-eyebrow">Финальный шаг</span>
+                    <h2 class="h2 text-balance" style="margin-top: 12px;">
+                        Готовы стать частью сети №1?
+                    </h2>
+                    <p class="lead" style="margin-top: 16px;">
+                        Оставьте заявку, чтобы получить договор, подробную фин. модель и&nbsp;план запуска для&nbsp;вашего города.
+                    </p>
+
+                    <div class="capture-bullets">
+                        <div class="capture-bullet">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0F0F10" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Финансовая модель под&nbsp;ваш город</span>
+                        </div>
+                        <div class="capture-bullet">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0F0F10" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Презентация и&nbsp;договор франшизы</span>
+                        </div>
+                        <div class="capture-bullet">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0F0F10" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>План запуска по&nbsp;неделям</span>
+                        </div>
+                        <div class="capture-bullet">
+                            <span class="ico">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0F0F10" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>
+                            </span>
+                            <span>Знакомство с&nbsp;командой за&nbsp;48&nbsp;часов</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-glossy" data-reveal>
+
+                    <form class="form" id="leadForm" novalidate>
+
+                        <!-- Honeypot -->
+                        <div class="honeypot" aria-hidden="true">
+                            <label>Не заполняйте: <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+                        </div>
+
+                        <input type="hidden" name="format" id="formatField" value="" />
+
+                        <div class="form-row cols-2">
+                            <label class="field" data-field="name">
+                                <span class="field-label">Имя</span>
+                                <input class="field-input" type="text" name="name" autocomplete="given-name" required minlength="2" />
+                                <span class="field-error">Введите имя</span>
+                            </label>
+                            <label class="field" data-field="phone">
+                                <span class="field-label">Телефон</span>
+                                <input class="field-input" type="tel" name="phone" id="phoneInput" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required />
+                                <span class="field-error">Корректный номер обязателен</span>
+                            </label>
+                        </div>
+
+                        <label class="field" data-field="city">
+                            <span class="field-label">Город запуска</span>
+                            <input class="field-input" type="text" name="city" id="cityInput" autocomplete="address-level2" required />
+                            <span class="field-error">Укажите город</span>
+                        </label>
+
+                        <div class="field" data-field="messenger">
+                            <span class="field-label">Удобный способ связи</span>
+                            <div class="segmented" role="radiogroup" aria-label="Способ связи">
+                                <input type="radio" id="msg-wa" name="messenger" value="WhatsApp" checked />
+                                <label for="msg-wa">WhatsApp</label>
+                                <input type="radio" id="msg-tg" name="messenger" value="Telegram" />
+                                <label for="msg-tg">Telegram</label>
+                                <input type="radio" id="msg-call" name="messenger" value="Звонок" />
+                                <label for="msg-call">Звонок</label>
+                            </div>
+                        </div>
+
+                        <label class="consent">
+                            <input type="checkbox" name="consent" required />
+                            <span>Согласен с&nbsp;<a href="#" style="text-decoration: underline;">политикой обработки персональных данных</a> (152-ФЗ).</span>
+                        </label>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 8px;">
+                            Получить материалы франшизы
+                            <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+                        </button>
+                    </form>
+
+                    <div class="form-success" id="formSuccess">
+                        <div class="form-success-ico">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+                        </div>
+                        <div class="h3" style="margin-bottom: 8px;">Заявка принята</div>
+                        <p class="text-muted">Менеджер свяжется в&nbsp;течение 30&nbsp;минут в&nbsp;рабочее время и&nbsp;вышлет материалы франшизы.</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ========================================================================
+     FOOTER
+     ======================================================================== -->
+<footer class="foot">
+    <div class="container">
+
+        <div class="foot-grid">
+            <div>
+                <div class="logo" style="margin-bottom: 16px;">
+                    <span class="logo-dot"></span>
+                    <span>4hands</span>
+                </div>
+                <p style="max-width: 36ch;">Сеть студий маникюра и&nbsp;педикюра №1 в&nbsp;России. 200+ точек, технология «в&nbsp;4&nbsp;руки».</p>
+            </div>
+
+            <div>
+                <div style="color: var(--c-ivory); font-weight: 600; margin-bottom: 12px;">Франшиза</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="#formats">Форматы</a>
+                    <a href="#cases">Кейсы</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+            </div>
+
+            <div>
+                <div style="color: var(--c-ivory); font-weight: 600; margin-bottom: 12px;">Контакты</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="tel:+79917770596">+7 991 777-05-96</a>
+                    <a href="mailto:franchise@4hands.ru">franchise@4hands.ru</a>
+                </div>
+            </div>
+
+            <div>
+                <div style="color: var(--c-ivory); font-weight: 600; margin-bottom: 12px;">Соцсети</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="#">Telegram-канал</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="foot-bottom">
+            <div>© 2026 4hands. Все права защищены.</div>
+            <div style="display:flex; gap: 20px;">
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Договор оферты</a>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+<!-- ========================================================================
+     MODAL — one popup for all CTAs
+     ======================================================================== -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg>
+        </button>
+
+        <div class="modal-logo">
+            <span class="logo-dot"></span>
+            <span>4hands</span>
+        </div>
+
+        <h2 class="h2" id="modalTitle" style="font-size: clamp(20px, 2.4vw, 30px);">
+            Получить материалы франшизы
+        </h2>
+        <p style="margin-top: 10px; color: var(--c-graphite); font-size: 15px; line-height: 1.5;">
+            Финансовая модель, договор и план запуска — вышлем в течение 30 минут в рабочее время.
+        </p>
+
+        <form class="form" id="modalForm" novalidate style="margin-top: 24px;">
+
+            <div class="honeypot" aria-hidden="true">
+                <label>Не заполняйте: <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+            </div>
+
+            <input type="hidden" name="format" id="modalFormatField" value="" />
+
+            <div class="form-row cols-2">
+                <label class="field" data-field="name">
+                    <span class="field-label">Имя</span>
+                    <input class="field-input" type="text" name="name" autocomplete="given-name" required minlength="2" />
+                    <span class="field-error">Введите имя</span>
+                </label>
+                <label class="field" data-field="phone">
+                    <span class="field-label">Телефон</span>
+                    <input class="field-input" type="tel" name="phone" id="modalPhoneInput" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required />
+                    <span class="field-error">Корректный номер обязателен</span>
+                </label>
+            </div>
+
+            <label class="field" data-field="city">
+                <span class="field-label">Город запуска</span>
+                <input class="field-input" type="text" name="city" id="modalCityInput" autocomplete="address-level2" required />
+                <span class="field-error">Укажите город</span>
+            </label>
+
+            <div class="field" data-field="messenger">
+                <span class="field-label">Удобный способ связи</span>
+                <div class="segmented" role="radiogroup" aria-label="Способ связи">
+                    <input type="radio" id="modal-msg-wa" name="messenger" value="WhatsApp" checked />
+                    <label for="modal-msg-wa">WhatsApp</label>
+                    <input type="radio" id="modal-msg-tg" name="messenger" value="Telegram" />
+                    <label for="modal-msg-tg">Telegram</label>
+                    <input type="radio" id="modal-msg-call" name="messenger" value="Звонок" />
+                    <label for="modal-msg-call">Звонок</label>
+                </div>
+            </div>
+
+            <label class="consent" style="margin-top: 12px;">
+                <input type="checkbox" name="consent" required />
+                <span>Согласен с&nbsp;<a href="#" style="text-decoration: underline;">политикой обработки персональных данных</a> (152-ФЗ).</span>
+            </label>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 16px; width: 100%; justify-content: center;">
+                Получить материалы
+                <svg class="arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+            </button>
+
+        </form>
+
+        <div class="form-success" id="modalSuccess">
+            <div class="form-success-ico">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <div class="h3" style="margin-bottom: 8px;">Заявка принята!</div>
+            <p class="text-muted">Менеджер свяжется в течение 30 минут и вышлет все материалы франшизы.</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>
