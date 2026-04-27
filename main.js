@@ -120,12 +120,7 @@
             gsap.registerPlugin(ScrollTrigger);
 
             items.forEach((item) => {
-                // Make sure initial CSS state is applied (override any is-revealed from IO)
-                item.classList.remove('is-revealed');
-
                 const dot = item.querySelector('.timeline-dot');
-                const year = item.querySelector('.timeline-year');
-                const content = item.querySelector('.timeline-content');
 
                 const tl = gsap.timeline({
                     scrollTrigger: {
@@ -135,28 +130,20 @@
                     }
                 });
 
-                // dot pops in
+                // Animate container — this overrides [data-reveal] opacity:0 via inline style
+                tl.fromTo(item,
+                    { opacity: 0, x: -32 },
+                    { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out',
+                      clearProps: 'transform' },
+                    0
+                );
+
+                // Dot pops in with bounce
                 if (dot) {
                     tl.fromTo(dot,
-                        { scale: 0, opacity: 0 },
-                        { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2.5)' },
-                        0
-                    );
-                }
-                // year slides in from left
-                if (year) {
-                    tl.fromTo(year,
-                        { opacity: 0, x: -24 },
-                        { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' },
-                        0.05
-                    );
-                }
-                // content slides up + fades
-                if (content) {
-                    tl.fromTo(content,
-                        { opacity: 0, y: 28 },
-                        { opacity: 1, y: 0, duration: 0.65, ease: 'power3.out' },
-                        0.1
+                        { scale: 0 },
+                        { scale: 1, duration: 0.5, ease: 'back.out(2.5)' },
+                        0.15
                     );
                 }
             });
