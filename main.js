@@ -277,8 +277,6 @@
                 trigger: track,
                 start: 'top top',
                 end: 'bottom bottom',
-                pin: pin,
-                pinSpacing: false,
                 scrub: 0.8,
                 onUpdate: (self) => {
                     const p = self.progress;
