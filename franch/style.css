@@ -2096,3 +2096,138 @@ body.modal-open { overflow: hidden; }
     }
     .timeline-year { font-size: 13px; }
 }
+
+/* ==========================================================================
+   MOBILE IMPROVEMENTS — targeted overrides for small screens
+   ========================================================================== */
+
+/* ── Fix H1/H2 size hierarchy on mobile (H1 was smaller than H2) ── */
+.h1 { font-size: clamp(28px, 6.5vw, 40px); }
+.h2 { font-size: clamp(22px, 5.5vw, 46px); }
+.h3 { font-size: clamp(17px, 4vw, 26px); }
+
+/* ── Hero: reduce top padding, tighten eyebrow gap ── */
+.hero-grid { padding-block: 52px 28px; }
+@media (min-width: 1024px) { .hero-grid { padding-block: 88px 56px; } }
+
+.hero-grid .logo { margin-bottom: 20px !important; }
+
+/* Eyebrow: prevent orphan word wrap */
+.h-eyebrow { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+/* ── Metrics: 3 columns even on smallest screens ── */
+.metrics {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 24px;
+}
+@media (min-width: 600px) { .metrics { gap: 16px; margin-top: 36px; } }
+
+.metric { padding: 12px 10px; border-radius: 16px; }
+@media (min-width: 600px) { .metric { padding: 18px 20px; border-radius: 20px; } }
+
+.metric-value { font-size: clamp(16px, 4.5vw, 28px); }
+.metric-suffix { font-size: 11px; }
+@media (min-width: 600px) { .metric-suffix { font-size: 13px; } }
+.metric-label { font-size: 9px; letter-spacing: 0.08em; }
+@media (min-width: 600px) { .metric-label { font-size: 11px; } }
+
+/* ── Hero CTA: tighter margin on mobile ── */
+.hero-cta-row { margin-top: 20px; gap: 10px; }
+@media (min-width: 600px) { .hero-cta-row { margin-top: 32px; gap: 12px; } }
+
+/* ── Hero entrance animations (above-fold — IO won't fire, use CSS) ── */
+@media (prefers-reduced-motion: no-preference) {
+    /* .metrics has data-reveal, IO handles its animation — skip here */
+    .hero-grid > div > .logo        { animation: heroFadeUp 0.7s var(--ease-out-expo) both 0.05s; }
+    .hero-grid > div > .h-eyebrow   { animation: heroFadeUp 0.7s var(--ease-out-expo) both 0.12s; }
+    .hero-grid > div > .h1          { animation: heroFadeUp 0.8s var(--ease-out-expo) both 0.22s; }
+    .hero-grid > div > .lead        { animation: heroFadeUp 0.8s var(--ease-out-expo) both 0.38s; }
+    .hero-grid > div > .hero-cta-row{ animation: heroFadeUp 0.7s var(--ease-out-expo) both 0.55s; }
+    .hero-grid > div > .hero-trust  { animation: heroFadeUp 0.6s var(--ease-out-expo) both 0.68s; }
+}
+
+@keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Stagger for grid cards (bento, formats, compare) ── */
+.bento-tile:nth-child(1),
+.format-card:nth-child(1),
+.compare-grid > *:nth-child(1) { --reveal-delay: 0s; }
+
+.bento-tile:nth-child(2),
+.format-card:nth-child(2),
+.compare-grid > *:nth-child(2) { --reveal-delay: 0.1s; }
+
+.bento-tile:nth-child(3),
+.support-list > *:nth-child(1) { --reveal-delay: 0.15s; }
+
+.bento-tile:nth-child(4),
+.support-list > *:nth-child(2) { --reveal-delay: 0.2s; }
+
+.bento-tile:nth-child(5),
+.support-list > *:nth-child(3) { --reveal-delay: 0.25s; }
+
+.bento-tile:nth-child(6),
+.support-list > *:nth-child(4) { --reveal-delay: 0.3s; }
+
+/* ── Card scale-in variant for bento tiles ── */
+@media (prefers-reduced-motion: no-preference) {
+    .bento-tile[data-reveal] {
+        transform: translateY(20px) scale(0.97);
+    }
+    .bento-tile[data-reveal].is-revealed {
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ── Section backgrounds: alternating for visual rhythm ── */
+section:nth-of-type(even):not(.hero):not(.section--plain) {
+    background: var(--c-bg-soft);
+}
+
+/* ── Section head lead max-width: less on mobile ── */
+@media (max-width: 600px) {
+    .section-head { max-width: 100%; }
+    .lead { max-width: 100%; font-size: clamp(15px, 4vw, 19px); }
+}
+
+/* ── Format card list: add left accent line for visual interest ── */
+@media (max-width: 900px) {
+    .format-includes { border-left: 2px solid var(--c-line-strong); padding-left: 16px; }
+    .format-card.is-premium .format-includes { border-left-color: rgba(255,255,255,0.2); }
+    .format-includes li::before { display: none; }
+}
+
+/* ── Compare lists: card-style on mobile ── */
+@media (max-width: 900px) {
+    .compare-item {
+        background: rgba(124, 63, 174, 0.04);
+        border-radius: 12px;
+        padding: 10px 12px;
+    }
+    .compare-item.bad { background: rgba(181, 69, 58, 0.04); }
+}
+
+/* ── Path mobile cards: tighter gap on small screens ── */
+@media (max-width: 600px) {
+    .path-mobile { gap: 16px; }
+    .path-mobile-body { padding: 16px; }
+}
+
+/* ── FAQ items: more breathing room on mobile ── */
+@media (max-width: 600px) {
+    .faq-summary { padding: 18px 16px; font-size: 15px; }
+}
+
+/* ── Cases slider: full-width cards on smallest screens ── */
+@media (max-width: 480px) {
+    .case-card { flex-basis: calc(100vw - 48px); }
+}
+
+/* ── Scroll cue: hide on very small heights ── */
+@media (max-height: 700px) {
+    .scroll-cue { display: none; }
+}
