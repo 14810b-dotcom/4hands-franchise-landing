@@ -2218,6 +2218,115 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     .compare-item.bad { background: rgba(181, 69, 58, 0.04); }
 }
 
+/* ── Path mobile: redesigned stage visuals ── */
+.path-mobile-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Unique gradient per step */
+.pms-location { background: linear-gradient(135deg, #5A2A82 0%, #7C3FAE 60%, #A06DD4 100%); }
+.pms-renovation { background: linear-gradient(135deg, #7C3FAE 0%, #B060C0 60%, #ED2CEE 100%); }
+.pms-equip { background: linear-gradient(180deg, #f5e5d5 0%, #e8d4bf 100%); }
+.pms-launch {
+    background: linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);
+    overflow: hidden;
+}
+.pms-launch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 80%, rgba(237,44,238,0.35), transparent 60%);
+}
+
+/* Step number badge */
+.pms-num {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    z-index: 2;
+}
+.pms-equip .pms-num,
+.pms-launch .pms-num { background: rgba(0,0,0,0.15); color: var(--c-ink); border-color: rgba(0,0,0,0.1); }
+.pms-launch .pms-num { color: #fff; background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.2); }
+
+/* SVG icon for steps 1–2 */
+.pms-icon {
+    width: 96px; height: 96px;
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+}
+
+/* Days badge bottom-right */
+.pms-days {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 0.03em;
+    z-index: 2;
+}
+.pms-equip .pms-days { color: var(--c-ink); background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.1); }
+
+/* Chairs row for step 3 */
+.pms-chairs-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-end;
+    padding-bottom: 24px;
+}
+.pms-chairs-row .chair { width: 20%; }
+
+/* People row for step 4 */
+.pms-people-row {
+    display: flex;
+    gap: 8%;
+    align-items: flex-end;
+    padding-bottom: 32px;
+    z-index: 1;
+}
+.pms-people-row .person { width: 18%; }
+
+/* "Полная запись" badge step 4 */
+.pms-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(237,44,238,0.25);
+    border: 1px solid rgba(237,44,238,0.5);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    white-space: nowrap;
+    z-index: 2;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 20px rgba(237,44,238,0.3);
+}
+
 /* ── Path mobile cards: tighter gap on small screens ── */
 @media (max-width: 600px) {
     .path-mobile { gap: 16px; }
