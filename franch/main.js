@@ -424,13 +424,7 @@
             const hp = form.querySelector('input[name="company"]');
             if (hp && hp.value.trim()) return;
             if (!validate()) { showToast('Проверьте поля формы'); return; }
-            const btn = form.querySelector('button[type="submit"]');
-            if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
-            setTimeout(() => {
-                form.style.display = 'none';
-                if (success) success.classList.add('is-active');
-                showToast('Заявка принята — ответим в течение 30 минут');
-            }, 600);
+            submitLead(form, success);
         });
     }
 
@@ -603,19 +597,50 @@
                 return;
             }
 
-            // Stub submit — would POST to CRM/webhook here
-            const submitBtn = form.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.style.opacity = '0.7';
-            }
-
-            setTimeout(() => {
-                form.style.display = 'none';
-                if (success) success.classList.add('is-active');
-                showToast('Заявка отправлена');
-            }, 600);
+            submitLead(form, success);
         });
+    }
+
+    // --------------------------------------------------------------------
+    // Shared lead submit → POST /api/lead
+    // Returns true on success, false on network/validation error.
+    // --------------------------------------------------------------------
+    async function submitLead(form, successEl) {
+        const btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+
+        const d = new FormData(form);
+        const payload = {
+            name:      (d.get('name')      || '').toString().trim(),
+            phone:     (d.get('phone')     || '').toString().replace(/\D/g, ''),
+            city:      (d.get('city')      || '').toString().trim(),
+            format:    (d.get('format')    || '') || null,
+            messenger: (d.get('messenger') || '') || null,
+            source:    'franch-landing',
+        };
+
+        try {
+            const resp = await fetch('/api/lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
+            if (!resp.ok) throw new Error(`status ${resp.status}`);
+
+            form.style.display = 'none';
+            if (successEl) successEl.classList.add('is-active');
+            showToast('Заявка отправлена — ответим в течение 30 минут');
+
+            if (window.dataLayer) {
+                window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
+            }
+            return true;
+        } catch (err) {
+            console.error('Lead submit error:', err);
+            showToast('Ошибка отправки — попробуйте ещё раз');
+            if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+            return false;
+        }
     }
 
     // --------------------------------------------------------------------

@@ -1,0 +1,37 @@
+name: Deploy to VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host:     ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key:      ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www/landings
+
+            # Pull latest code
+            git pull origin main
+
+            # Install deps and rebuild CSS
+            npm install --omit=dev
+            npm run css
+
+            # Restart Node.js AMO server if server code changed
+            if git diff HEAD~1 --name-only | grep -q 'server/'; then
+              pm2 restart amo-lead || pm2 start npm --name amo-lead -- start
+            fi
+
+            # Reload nginx (no downtime)
+            sudo nginx -t && sudo systemctl reload nginx
+
+            echo "Deploy done: $(date)"

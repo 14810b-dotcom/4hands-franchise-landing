@@ -1,20 +1,56 @@
-# CLAUDE.md — 4hands Franchise Landing
+# CLAUDE.md — 4hands Landings монорепо
 
 ## Структура проекта
 
 ```
-/Сайт b2b/
-├── CLAUDE.md                          ← этот файл (документация для AI)
-├── TZ.md                              ← полное техническое задание
-├── index.html                         ← семантическая разметка, все 9 экранов
-├── style.css                          ← CSS-токены, Friendly Premium, анимации
-├── main.js                            ← JS: GSAP, sticky nav, form, cursor, FAQ
-├── assets/
-│   ├── fonts/                         ← DrukWideCyr-Medium.woff2 (добавить вручную!)
-│   ├── images/                        ← реальные фото/видео (добавить вручную)
-│   └── icons/                         ← SVG иконки
-└── брендбук 1 часть (1).pdf           ← исходный брендбук (1.3GB, 20 стр.)
+/Сайт b2b/  (репо корень = /var/www/landings на VPS)
+├── CLAUDE.md                          ← этот файл
+├── TZ.md                              ← техническое задание
+├── package.json                       ← Node.js (AMO сервер)
+├── nginx.conf                         ← шаблон nginx конфига для VPS
+├── robots.txt                         ← SEO: доступ для ботов
+├── sitemap.xml                        ← SEO: карта сайта (обновлять при добавлении страниц)
+│
+├── franch/                            ← страница франшизы → 4you.4hands.ru/franch
+│   ├── index.html
+│   ├── style.css
+│   ├── main.js
+│   └── assets/
+│       ├── fonts/                     ← DrukWideCyr-Medium.woff2 (добавить вручную!)
+│       ├── images/                    ← фото/видео (добавить вручную)
+│       └── icons/
+│
+├── server/
+│   └── amo-lead.js                   ← Node.js: POST /api/lead → AMO CRM
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                ← auto-deploy при git push → main
+│
+└── брендбук 1 часть (1).pdf
 ```
+
+## Добавление новой страницы (5 минут)
+
+```bash
+# 1. Скопировать шаблон
+cp -r franch new-slug          # например: b2b, promo-2026, corp
+
+# 2. Поменять контент
+# Отредактировать new-slug/index.html
+
+# 3. Добавить в nginx.conf (раздел "Custom coded pages")
+#    location /new-slug {
+#        root /var/www/landings;
+#        try_files $uri $uri/ /new-slug/index.html;
+#    }
+
+# 4. Добавить в sitemap.xml
+
+# 5. Пушим → деплой автоматически
+git add . && git commit -m "add: /new-slug landing" && git push
+```
+Nginx перезагружается через GitHub Action автоматически после пуша.
 
 ---
 
@@ -69,9 +105,13 @@
 ## Локальный запуск
 
 ```bash
+# Статика (только HTML/CSS/JS, без AMO):
 cd "/Users/viktor/Desktop/Antigravity/Сайт b2b"
 python3 -m http.server 3333
-# открыть http://localhost:3333
+# открыть http://localhost:3333/franch/
+
+# Node.js сервер (для AMO, нужны env-переменные):
+AMO_SUBDOMAIN=4hands AMO_TOKEN=xxx AMO_PIPELINE_ID=1 AMO_RESPONSIBLE_USER_ID=1 node server/amo-lead.js
 ```
 
 ---
@@ -130,13 +170,25 @@ init() on DOMContentLoaded
 
 ## Что осталось (TODO)
 
-- [ ] Добавить `DrukWideCyr-Medium.woff2` в `assets/fonts/`
-- [ ] Заменить CSS-плейсхолдеры реальными фото/видео в `assets/images/`
-- [ ] Подключить реальный CRM-вебхук в `initForm()` в main.js
+### Контент (вручную)
+- [ ] Добавить `DrukWideCyr-Medium.woff2` в `franch/assets/fonts/`
+- [ ] Заменить плейсхолдеры фото/видео в `franch/assets/images/`
 - [ ] Заменить плейсхолдеры кейсов (Экран 6) реальными данными
 - [ ] Добавить реальное фото основателя (Экран 7)
+- [ ] Обновить `og:image` в `franch/index.html` (сейчас без URL)
 - [ ] Подключить GTM (заготовка-комментарий уже есть в `<head>`)
 - [ ] Брендбук часть 2 (когда появится)
+
+### Инфраструктура (VPS, один раз)
+- [ ] Купить VPS 2 GB RAM (Beget / TimeWeb ~400 ₽/мес)
+- [ ] Установить на VPS: nginx, Node.js 20+, PM2, git
+- [ ] Клонировать репо в `/var/www/landings`
+- [ ] Скопировать `nginx.conf` в `/etc/nginx/sites-available/4you.4hands.ru`, включить, certbot HTTPS
+- [ ] Запустить AMO сервер: `pm2 start npm --name amo-lead -- start`
+- [ ] Добавить секреты GitHub: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`
+- [ ] Добавить env-переменные на VPS: `AMO_SUBDOMAIN`, `AMO_TOKEN`, `AMO_PIPELINE_ID`, `AMO_RESPONSIBLE_USER_ID`
+- [ ] В `nginx.conf` заменить `YOUR_TILDA_ORIGIN` на реальный origin из Tilda
+- [ ] Зарегистрировать сайт в Google Search Console + Yandex Webmaster, отправить sitemap
 
 ---
 

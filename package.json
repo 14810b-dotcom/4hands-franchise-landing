@@ -1,0 +1,17 @@
+{
+  "name": "4hands-landings",
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server/amo-lead.js",
+    "css": "tailwindcss -i tailwind.src.css -o franch/tailwind.css --minify",
+    "css:watch": "tailwindcss -i tailwind.src.css -o franch/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "tailwindcss": "^3.4.19"
+  }
+}
