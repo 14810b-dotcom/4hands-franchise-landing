@@ -121,7 +121,7 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, city, format, messenger, source } = data;
+        const { name, phone, city, format, messenger, source, ads_consent } = data;
 
         // Server-side validation
         if (!name || typeof name !== 'string' || name.trim().length < 2) {
@@ -148,6 +148,7 @@ const server = http.createServer(async (req, res) => {
             // 2. Create lead
             const tags = [{ name: source || 'franch-landing' }];
             if (messenger) tags.push({ name: `messenger:${messenger}` });
+            if (ads_consent) tags.push({ name: 'ads_consent' });
 
             await amoPost('/leads', [{
                 name: `Заявка ${city.trim()} — ${format || 'франшиза'}`,

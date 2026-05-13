@@ -614,9 +614,10 @@
             name:      (d.get('name')      || '').toString().trim(),
             phone:     (d.get('phone')     || '').toString().replace(/\D/g, ''),
             city:      (d.get('city')      || '').toString().trim(),
-            format:    (d.get('format')    || '') || null,
-            messenger: (d.get('messenger') || '') || null,
-            source:    'franch-landing',
+            format:     (d.get('format')    || '') || null,
+            messenger:  (d.get('messenger') || '') || null,
+            ads_consent: !!d.get('ads_consent'),
+            source:     'franch-landing',
         };
 
         try {
