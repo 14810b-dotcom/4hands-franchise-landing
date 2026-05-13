@@ -620,13 +620,23 @@
             source:     'franch-landing',
         };
 
+        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwL4G1tM4BOsN2NRBVFnrYHMn8eLF5G6_uc986jxbWp-7a40aUYsfCYMODG8C2Zq1zL/exec';
+
         try {
-            const resp = await fetch('/api/lead', {
+            // Send to Google Sheets (primary, always works)
+            await fetch(SHEETS_URL, {
                 method: 'POST',
+                mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
-            if (!resp.ok) throw new Error(`status ${resp.status}`);
+
+            // Also send to AMO when server is configured (silent fail if not ready)
+            fetch('/api/lead', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            }).catch(() => {});
 
             form.style.display = 'none';
             if (successEl) successEl.classList.add('is-active');
