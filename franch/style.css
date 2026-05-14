@@ -2347,3 +2347,6 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
 @media (max-height: 700px) {
     .scroll-cue { display: none; }
 }
+@media (max-width: 767px) {
+    .scroll-cue { display: none; }
+}
