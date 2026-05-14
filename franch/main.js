@@ -405,14 +405,24 @@
             const name  = (d.get('name')  || '').toString().trim();
             const phone = (d.get('phone') || '').toString().replace(/\D/g, '');
             const city  = (d.get('city')  || '').toString().trim();
+            const consentInput = form.querySelector('input[name="consent"]');
+            const consentLabel = consentInput?.closest('.consent');
             const ok1 = name.length >= 2;  setErr('name',  !ok1);
             const ok2 = phone.length >= 11; setErr('phone', !ok2);
             const ok3 = city.length >= 2;  setErr('city',  !ok3);
-            return ok1 && ok2 && ok3;
+            const ok4 = !!consentInput?.checked;
+            if (!ok4) consentLabel?.classList.add('has-error');
+            else consentLabel?.classList.remove('has-error');
+            return ok1 && ok2 && ok3 && ok4;
         };
 
         form.querySelectorAll('input').forEach((inp) => {
             inp.addEventListener('input', () => inp.closest('.field')?.classList.remove('has-error'));
+            inp.addEventListener('change', () => {
+                if (inp.type === 'checkbox' && inp.name === 'consent' && inp.checked) {
+                    inp.closest('.consent')?.classList.remove('has-error');
+                }
+            });
         });
 
         // phone mask on modal phone input
@@ -567,21 +577,29 @@
             const name = (data.get('name') || '').toString().trim();
             const phone = (data.get('phone') || '').toString().replace(/\D/g, '');
             const city = (data.get('city') || '').toString().trim();
-            const consent = form.querySelector('input[name="consent"]').checked;
+            const consentInput = form.querySelector('input[name="consent"]');
+            const consentLabel = consentInput?.closest('.consent');
+            const consent = consentInput?.checked;
 
             if (name.length < 2) { setError('name', true); ok = false; } else setError('name', false);
             if (phone.length < 11) { setError('phone', true); ok = false; } else setError('phone', false);
             if (city.length < 2) { setError('city', true); ok = false; } else setError('city', false);
-            if (!consent) ok = false;
+            if (!consent) { consentLabel?.classList.add('has-error'); ok = false; }
+            else { consentLabel?.classList.remove('has-error'); }
 
             return ok;
         };
 
-        // Live clear errors as user types
+        // Live clear errors as user types / checks
         form.querySelectorAll('input').forEach((inp) => {
             inp.addEventListener('input', () => {
                 const wrap = inp.closest('.field');
                 if (wrap) wrap.classList.remove('has-error');
+            });
+            inp.addEventListener('change', () => {
+                if (inp.type === 'checkbox' && inp.name === 'consent' && inp.checked) {
+                    inp.closest('.consent')?.classList.remove('has-error');
+                }
             });
         });
 
