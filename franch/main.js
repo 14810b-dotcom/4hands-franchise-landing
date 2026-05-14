@@ -620,14 +620,14 @@
             source:     'franch-landing',
         };
 
-        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwL4G1tM4BOsN2NRBVFnrYHMn8eLF5G6_uc986jxbWp-7a40aUYsfCYMODG8C2Zq1zL/exec';
+        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxtUkvpbRA_6ChtFTAtEQOD-uWWTdrvlSHqKfVviY8PtxydIOTgO8g7OVc5Y-hRuwv6/exec';
 
         try {
-            // Send to Google Sheets (primary, always works)
+            // Send to Google Sheets (no-cors requires text/plain for simple request)
             await fetch(SHEETS_URL, {
                 method: 'POST',
                 mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain' },
                 body: JSON.stringify(payload),
             });
 
