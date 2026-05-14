@@ -398,11 +398,18 @@ a { color: inherit; text-decoration: none; }
     aspect-ratio: 4 / 5;
     border-radius: 32px;
     overflow: hidden;
-    background:
-        radial-gradient(ellipse at top left, rgba(255,255,255,0.3), transparent 50%),
-        var(--grad-hero);
+    background: var(--grad-hero);
     box-shadow: 0 24px 60px -20px rgba(124, 63, 174, 0.45);
     border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
 }
 
 .hero-image-frame::after {
