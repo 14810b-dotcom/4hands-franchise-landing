@@ -121,18 +121,17 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, city, format, messenger, source, ads_consent } = data;
+        const { name, phone, city, format, budget, messenger, source, ads_consent } = data;
+        const resolvedFormat = format || budget || 'не указан';
+        const resolvedCity = (city || '').trim() || 'не указан';
 
         // Server-side validation
         if (!name || typeof name !== 'string' || name.trim().length < 2) {
             return json(res, 400, { ok: false, error: 'invalid_name' }, origin);
         }
         const phoneDigits = (phone || '').replace(/\D/g, '');
-        if (phoneDigits.length < 11) {
+        if (phoneDigits.length < 10) {
             return json(res, 400, { ok: false, error: 'invalid_phone' }, origin);
-        }
-        if (!city || typeof city !== 'string' || city.trim().length < 2) {
-            return json(res, 400, { ok: false, error: 'invalid_city' }, origin);
         }
 
         try {
@@ -151,7 +150,7 @@ const server = http.createServer(async (req, res) => {
             if (ads_consent) tags.push({ name: 'ads_consent' });
 
             await amoPost('/leads', [{
-                name: `Заявка ${city.trim()} — ${format || 'франшиза'}`,
+                name: `Заявка ${resolvedCity} — ${resolvedFormat || 'франшиза'}`,
                 pipeline_id: Number(AMO_PIPELINE_ID),
                 responsible_user_id: Number(AMO_RESPONSIBLE_USER_ID),
                 _embedded: {

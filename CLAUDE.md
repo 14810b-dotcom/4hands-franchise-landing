@@ -12,6 +12,7 @@
 ├── sitemap.xml                        ← SEO: карта сайта (обновлять при добавлении страниц)
 │
 ├── franch/                            ← страница франшизы → 4you.4hands.ru/franch
+├── salon-krasoty/                     ← SEO-статья «франшиза салона красоты» → 4you.4hands.ru/salon-krasoty (Next.js static export)
 │   ├── index.html
 │   ├── style.css
 │   ├── main.js
