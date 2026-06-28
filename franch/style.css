@@ -856,7 +856,8 @@ a { color: inherit; text-decoration: none; }
     transition: opacity 0.8s var(--ease-out-expo),
                 transform 0.8s var(--ease-out-expo);
 }
-.path-mobile-card.is-visible {
+.path-mobile-card.is-visible,
+.path-mobile.js-reveal .path-mobile-card.is-visible {
     opacity: 1;
     transform: translateY(0);
 }
