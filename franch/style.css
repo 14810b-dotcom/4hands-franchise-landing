@@ -635,9 +635,10 @@ a { color: inherit; text-decoration: none; }
     will-change: opacity, transform;
 }
 
-/* Layer 1: bare concrete shell */
+/* Layer 1: photo (помещение) — gradient fallback if image missing */
 .path-layer.l1 {
     background:
+        center / cover no-repeat url('assets/images/path/step-1.jpg'),
         linear-gradient(180deg, #3d3d40 0%, #2a2a2c 60%, #1f1f21 100%);
     opacity: 1;
 }
@@ -657,9 +658,10 @@ a { color: inherit; text-decoration: none; }
     background: linear-gradient(180deg, transparent, rgba(0,0,0,0.4));
 }
 
-/* Layer 2: walls + soft light */
+/* Layer 2: photo (ремонт) — gradient fallback if image missing */
 .path-layer.l2 {
     background:
+        center / cover no-repeat url('assets/images/path/step-2.jpg'),
         radial-gradient(ellipse 70% 50% at 50% 0%, rgba(237, 44, 238, 0.2), transparent 70%),
         linear-gradient(180deg, #ede0f8 0%, #d8c8f0 100%);
 }
@@ -669,6 +671,23 @@ a { color: inherit; text-decoration: none; }
     top: 0; left: 0; right: 0; height: 40%;
     background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.5), transparent 70%);
 }
+
+/* Layer 3: photo (оснащение) — gradient fallback if image missing */
+.path-layer.l3 {
+    background:
+        center / cover no-repeat url('assets/images/path/step-3.jpg'),
+        linear-gradient(180deg, #f5e5d5 0%, #e8d4bf 100%);
+}
+/* Layer 4: photo (готовый салон) — gradient fallback if image missing */
+.path-layer.l4 {
+    background:
+        center / cover no-repeat url('assets/images/path/step-4.jpg'),
+        linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);
+}
+/* Real photos replace CSS silhouettes */
+.path-layer.l3-content,
+.path-layer.l4-content,
+.path-layer.l4 .glow { display: none; }
 
 /* Layer 3: furniture silhouettes */
 .path-layer.l3-content {
@@ -766,15 +785,16 @@ a { color: inherit; text-decoration: none; }
 }
 @media (min-width: 1024px) {
     .path-pin {
-        grid-template-columns: 1fr 360px;
-        gap: 60px;
-        place-items: center;
+        grid-template-columns: minmax(0, 760px) 340px;
+        gap: 56px;
+        justify-content: center;
+        align-items: center;
         padding-inline: 40px;
     }
-    .path-stage { margin-left: auto; }
+    .path-stage { margin-left: 0; width: 100%; }
     .path-steps {
         margin-top: 0;
-        max-width: 360px;
+        max-width: 340px;
     }
 }
 
@@ -827,6 +847,10 @@ a { color: inherit; text-decoration: none; }
     overflow: hidden;
     background: #FFFFFF;
     box-shadow: var(--shadow-card);
+}
+/* Hidden initial state applied only when JS reveal is active —
+   no-JS / JS-error keeps cards visible */
+.path-mobile.js-reveal .path-mobile-card {
     opacity: 0;
     transform: translateY(40px);
     transition: opacity 0.8s var(--ease-out-expo),
@@ -2240,14 +2264,18 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     overflow: hidden;
 }
 
-/* Unique gradient per step */
-.pms-location { background: linear-gradient(135deg, #5A2A82 0%, #7C3FAE 60%, #A06DD4 100%); }
-.pms-renovation { background: linear-gradient(135deg, #7C3FAE 0%, #B060C0 60%, #ED2CEE 100%); }
-.pms-equip { background: linear-gradient(180deg, #f5e5d5 0%, #e8d4bf 100%); }
+/* Photo per step — gradient fallback if image missing */
+.pms-location { background: center / cover no-repeat url('assets/images/path/step-1.jpg'), linear-gradient(135deg, #5A2A82 0%, #7C3FAE 60%, #A06DD4 100%); }
+.pms-renovation { background: center / cover no-repeat url('assets/images/path/step-2.jpg'), linear-gradient(135deg, #7C3FAE 0%, #B060C0 60%, #ED2CEE 100%); }
+.pms-equip { background: center / cover no-repeat url('assets/images/path/step-3.jpg'), linear-gradient(180deg, #f5e5d5 0%, #e8d4bf 100%); }
 .pms-launch {
-    background: linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);
+    background: center / cover no-repeat url('assets/images/path/step-4.jpg'), linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);
     overflow: hidden;
 }
+/* Real photos replace SVG/silhouette decorations on mobile cards */
+.pms-icon,
+.pms-chairs-row,
+.pms-people-row { display: none; }
 .pms-launch::before {
     content: '';
     position: absolute;

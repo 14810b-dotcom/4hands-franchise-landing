@@ -239,6 +239,8 @@
             if (isReducedMotion) {
                 mobileCards.forEach((c) => c.classList.add('is-visible'));
             } else {
+                const wrap = document.querySelector('.path-mobile');
+                if (wrap) wrap.classList.add('js-reveal');
                 const io = new IntersectionObserver((entries) => {
                     entries.forEach((entry) => {
                         if (entry.isIntersecting) {
