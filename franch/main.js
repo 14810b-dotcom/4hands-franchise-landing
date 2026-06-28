@@ -266,7 +266,10 @@
 
         const track = document.getElementById('pathTrack');
         const pin = document.getElementById('pathPin');
-        const layers = document.querySelectorAll('#pathStage .path-layer');
+        // Direct children only — .l3-content/.l4-content are nested wrappers
+        // that also carry the "path-layer" class, which would otherwise get
+        // picked up by a descendant selector and throw off layers[] indexing.
+        const layers = document.querySelectorAll('#pathStage > .path-layer');
         const steps = document.querySelectorAll('#pathSteps .path-step');
         if (!track || !pin || layers.length < 4) return;
 
@@ -274,30 +277,39 @@
         gsap.set(layers[0], { opacity: 1, scale: 1 });
         gsap.set([layers[1], layers[2], layers[3]], { opacity: 0, scale: 1.04 });
 
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: track,
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: 0.8,
-                onUpdate: (self) => {
-                    const p = self.progress;
-                    let stepIdx = 0;
-                    if (p > 0.75) stepIdx = 3;
-                    else if (p > 0.5) stepIdx = 2;
-                    else if (p > 0.25) stepIdx = 1;
-                    steps.forEach((s, i) => s.classList.toggle('is-active', i === stepIdx));
-                },
+        // Each layer's fade completes BEFORE the matching step label flips
+        // (label flips at p>0.25/0.5/0.75) — otherwise the label shows step N
+        // while the photo for step N hasn't finished crossfading in yet.
+        const fades = [
+            { layer: layers[1], dim: layers[0], start: 0.125, end: 0.25 },
+            { layer: layers[2], dim: null, start: 0.375, end: 0.5 },
+            { layer: layers[3], dim: null, start: 0.625, end: 0.75 },
+        ];
+
+        ScrollTrigger.create({
+            trigger: track,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.8,
+            onUpdate: (self) => {
+                const p = self.progress;
+
+                fades.forEach((f) => {
+                    let o;
+                    if (p <= f.start) o = 0;
+                    else if (p >= f.end) o = 1;
+                    else o = (p - f.start) / (f.end - f.start);
+                    gsap.set(f.layer, { opacity: o, scale: 1.04 - 0.04 * o });
+                    if (f.dim) gsap.set(f.dim, { opacity: 1 - 0.5 * o });
+                });
+
+                let stepIdx = 0;
+                if (p > 0.75) stepIdx = 3;
+                else if (p > 0.5) stepIdx = 2;
+                else if (p > 0.25) stepIdx = 1;
+                steps.forEach((s, i) => s.classList.toggle('is-active', i === stepIdx));
             },
         });
-
-        // 0 → 0.33: layer 2 fades in over layer 1
-        tl.to(layers[1], { opacity: 1, scale: 1, duration: 1, ease: 'power2.inOut' }, 0)
-          .to(layers[0], { opacity: 0.5, duration: 1, ease: 'power2.inOut' }, 0)
-          // 0.33 → 0.66: layer 3 (furniture)
-          .to(layers[2], { opacity: 1, scale: 1, duration: 1, ease: 'power2.inOut' }, 1)
-          // 0.66 → 1: layer 4 (people)
-          .to(layers[3], { opacity: 1, scale: 1, duration: 1, ease: 'power2.inOut' }, 2);
     }
 
     // --------------------------------------------------------------------
