@@ -684,17 +684,14 @@ a { color: inherit; text-decoration: none; }
         center / cover no-repeat url('assets/images/path/step-4.jpg'),
         linear-gradient(135deg, #1A1A1A 0%, #3D3D3D 100%);
 }
-/* Real photos replace CSS silhouettes */
-.path-layer.l3-content,
-.path-layer.l4-content,
 .path-layer.l4 .glow { display: none; }
 
-/* Layer 3: furniture silhouettes */
+/* Layer 3: furniture silhouettes — replaced by photo, kept hidden */
 .path-layer.l3-content {
     position: absolute;
     bottom: 8%;
     left: 0; right: 0;
-    display: flex;
+    display: none;
     justify-content: center;
     gap: 6%;
     padding-inline: 8%;
@@ -725,12 +722,12 @@ a { color: inherit; text-decoration: none; }
     border-radius: 8px;
 }
 
-/* Layer 4: people dots (abstract) */
+/* Layer 4: people dots (abstract) — replaced by photo, kept hidden */
 .path-layer.l4-content {
     position: absolute;
     bottom: 15%;
     left: 0; right: 0;
-    display: flex;
+    display: none;
     justify-content: center;
     gap: 6%;
     padding-inline: 8%;
