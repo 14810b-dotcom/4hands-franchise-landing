@@ -87,6 +87,8 @@ html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1183,6 +1185,7 @@ a { color: inherit; text-decoration: none; }
     border-radius: 32px;
     overflow: hidden;
     background:
+        center / cover no-repeat url('assets/images/founder/tatiana.jpg'),
         radial-gradient(ellipse at top, rgba(255,255,255,0.3), transparent 50%),
         var(--grad-hero);
     box-shadow: 0 24px 60px -20px rgba(124, 63, 174, 0.4);
