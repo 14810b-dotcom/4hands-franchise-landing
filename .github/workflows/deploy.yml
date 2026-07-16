@@ -31,15 +31,15 @@ jobs:
             cp /var/www/landings/nginx.conf /etc/nginx/sites-available/4you.4hands.ru
             nginx -t && systemctl reload nginx
 
-            # One-time, idempotent: issue cert for offers.4hands.ru once DNS
+            # One-time, idempotent: issue cert for new.4hands.ru once DNS
             # points here. Skips instantly if already issued. Uses `certonly`
             # (not `--nginx`) so it does NOT self-edit nginx config — avoids
             # drift with the repo's nginx.conf, which stays the source of truth.
             # Wrapped so a failure here (e.g. DNS not propagated yet) never
             # aborts the rest of this deploy — main site is unaffected either way.
-            if [ ! -f /etc/letsencrypt/live/offers.4hands.ru/fullchain.pem ]; then
-              certbot certonly --nginx -d offers.4hands.ru --non-interactive --agree-tos \
-                && echo "certbot: issued cert for offers.4hands.ru" \
+            if [ ! -f /etc/letsencrypt/live/new.4hands.ru/fullchain.pem ]; then
+              certbot certonly --nginx -d new.4hands.ru --non-interactive --agree-tos \
+                && echo "certbot: issued cert for new.4hands.ru" \
                 || echo "certbot: skipped (DNS likely not propagated yet) — will retry on next deploy"
             fi
 
