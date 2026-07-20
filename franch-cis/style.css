@@ -835,6 +835,16 @@ a { color: inherit; text-decoration: none; }
     .formats-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
 }
 
+/* Единственная карточка формата (нет больше сравнения Стрит/ТЦ) — центрируем, не растягиваем на 2 колонки */
+.formats-grid--single {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin-inline: auto;
+}
+@media (min-width: 900px) {
+    .formats-grid--single { grid-template-columns: 1fr; }
+}
+
 .format-card {
     position: relative;
     overflow: hidden;
