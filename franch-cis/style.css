@@ -872,6 +872,7 @@ a { color: inherit; text-decoration: none; }
     padding-block: 24px;
     border-block: 1px solid var(--c-line);
 }
+.price-row--triple { grid-template-columns: repeat(3, 1fr); }
 .format-card.is-premium .price-row {
     border-color: rgba(255, 255, 255, 0.1);
 }
