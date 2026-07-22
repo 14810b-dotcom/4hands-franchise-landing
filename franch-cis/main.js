@@ -9,6 +9,7 @@
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const TELEGRAM_BOT_URL = 'https://t.me/franchmanik_bot';
 
     // ----- Boot -----
     document.addEventListener('DOMContentLoaded', () => {
@@ -658,7 +659,13 @@
 
             form.style.display = 'none';
             if (successEl) successEl.classList.add('is-active');
-            showToast('Заявка отправлена — ответим в течение 30 минут');
+
+            if (payload.messenger === 'Telegram') {
+                showToast('Заявка отправлена — переводим в Telegram');
+                setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 1200);
+            } else {
+                showToast('Заявка отправлена — ответим в течение 30 минут');
+            }
 
             if (window.dataLayer) {
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
