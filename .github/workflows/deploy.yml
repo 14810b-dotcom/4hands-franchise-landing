@@ -37,12 +37,6 @@ jobs:
             # avoids drift with the repo's nginx.conf, which stays the source of
             # truth. Wrapped so a failure here (e.g. DNS not propagated yet) never
             # aborts the rest of this deploy — main site is unaffected either way.
-            if [ ! -f /etc/letsencrypt/live/new.4hands.ru/fullchain.pem ]; then
-              certbot certonly --nginx -d new.4hands.ru --non-interactive --agree-tos \
-                && echo "certbot: issued cert for new.4hands.ru" \
-                || echo "certbot: skipped new.4hands.ru (DNS likely not propagated yet) — will retry on next deploy"
-            fi
-
             if [ ! -f /etc/letsencrypt/live/franchbeaty.ru/fullchain.pem ]; then
               certbot certonly --nginx -d franchbeaty.ru -d www.franchbeaty.ru --non-interactive --agree-tos \
                 && echo "certbot: issued cert for franchbeaty.ru" \
