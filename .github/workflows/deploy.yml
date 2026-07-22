@@ -22,9 +22,21 @@ jobs:
             # Pull latest code
             git pull origin main
 
-            # Restart Node.js AMO server if server code changed
-            if git diff HEAD~1 --name-only | grep -q 'server/'; then
-              pm2 restart amo-lead || pm2 start npm --name amo-lead -- start
+            # AMO lead server: (re)start with fresh env every deploy so secret
+            # rotations / new origins take effect without manual SSH.
+            # Skips (with a log line) if AMO_TOKEN secret isn't set yet.
+            export AMO_SUBDOMAIN='${{ secrets.AMO_SUBDOMAIN }}'
+            export AMO_TOKEN='${{ secrets.AMO_TOKEN }}'
+            export AMO_PIPELINE_ID='${{ secrets.AMO_PIPELINE_ID }}'
+            export AMO_RESPONSIBLE_USER_ID='${{ secrets.AMO_RESPONSIBLE_USER_ID }}'
+            export ALLOWED_ORIGINS='https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru'
+
+            if [ -n "$AMO_TOKEN" ]; then
+              pm2 restart amo-lead --update-env || pm2 start npm --name amo-lead --update-env -- start
+              pm2 save
+              echo "amo-lead: (re)started with current env"
+            else
+              echo "amo-lead: AMO_TOKEN secret not set — skipping start (see gh secret set commands)"
             fi
 
             # Sync nginx config from repo and reload

@@ -6,8 +6,10 @@ const {
     AMO_PIPELINE_ID,
     AMO_RESPONSIBLE_USER_ID,
     PORT = '3001',
-    ALLOWED_ORIGIN = 'https://4you.4hands.ru',
+    ALLOWED_ORIGINS = 'https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru',
 } = process.env;
+
+const allowedOrigins = ALLOWED_ORIGINS.split(',').map(s => s.trim()).filter(Boolean);
 
 const required = ['AMO_SUBDOMAIN', 'AMO_TOKEN', 'AMO_PIPELINE_ID', 'AMO_RESPONSIBLE_USER_ID'];
 for (const key of required) {
@@ -63,9 +65,9 @@ async function amoPost(path, body) {
 }
 
 function setCors(res, origin) {
-    // Only allow requests from our own domain
-    if (origin === ALLOWED_ORIGIN) {
-        res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGIN);
+    // Only allow requests from our own domains
+    if (allowedOrigins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
         res.setHeader('Vary', 'Origin');
     }
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -95,7 +97,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     // Block requests from unknown origins (direct API calls from other sites)
-    if (origin && origin !== ALLOWED_ORIGIN) {
+    if (origin && !allowedOrigins.includes(origin)) {
         return json(res, 403, { ok: false, error: 'forbidden' }, origin);
     }
 
