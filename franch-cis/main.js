@@ -660,12 +660,8 @@
             form.style.display = 'none';
             if (successEl) successEl.classList.add('is-active');
 
-            if (payload.messenger === 'Telegram') {
-                showToast('Заявка отправлена — переводим в Telegram');
-                setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 1200);
-            } else {
-                showToast('Заявка отправлена — ответим в течение 30 минут');
-            }
+            showToast('Заявка отправлена — переводим в Telegram');
+            setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 1200);
 
             if (window.dataLayer) {
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
