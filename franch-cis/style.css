@@ -872,7 +872,7 @@ a { color: inherit; text-decoration: none; }
     border-block: 1px solid var(--c-line);
 }
 .price-row--triple { grid-template-columns: repeat(3, 1fr); }
-.price-row > div { min-width: 0; }
+.price-row > div { min-width: 0; container-type: inline-size; }
 .format-card.is-premium .price-row {
     border-color: rgba(255, 255, 255, 0.1);
 }
@@ -887,7 +887,7 @@ a { color: inherit; text-decoration: none; }
 .price-cell-value {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(15px, 4.2vw, 30px);
+    font-size: clamp(13px, 13cqw, 28px);
     letter-spacing: -0.02em;
     white-space: nowrap;
 }
