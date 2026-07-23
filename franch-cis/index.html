@@ -645,7 +645,7 @@
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F0F10" stroke-width="2" stroke-linecap="round"><path d="M3 7l9-4 9 4-9 4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
                     </div>
                     <div>
-                        <div class="bento-title">Корпоративный университет</div>
+                        <div class="bento-title" style="color: var(--c-purple);">Корпоративный университет</div>
                         <div class="bento-desc">Обучение бизнесу для&nbsp;франчайзи и&nbsp;собственника, доступ к&nbsp;нашей базе знаний.</div>
                     </div>
                 </article>
@@ -1187,18 +1187,6 @@
                             </label>
                         </div>
 
-                        <div class="field" data-field="messenger">
-                            <span class="field-label">Удобный способ связи</span>
-                            <div class="segmented" role="radiogroup" aria-label="Способ связи">
-                                <input type="radio" id="msg-wa" name="messenger" value="WhatsApp" checked />
-                                <label for="msg-wa">WhatsApp</label>
-                                <input type="radio" id="msg-tg" name="messenger" value="Telegram" />
-                                <label for="msg-tg">Telegram</label>
-                                <input type="radio" id="msg-call" name="messenger" value="Звонок" />
-                                <label for="msg-call">Звонок</label>
-                            </div>
-                        </div>
-
                         <!-- TODO: РФ-ссылки на согласие/политику ниже — юридически не подходят для Казахстана. Нужны локальные документы под закон о персональных данных РК перед запуском. -->
                         <label class="consent">
                             <input type="checkbox" name="consent" required />
@@ -1330,18 +1318,6 @@
                     <input class="field-input" type="tel" name="phone" id="modalPhoneInput" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required />
                     <span class="field-error">Корректный номер обязателен</span>
                 </label>
-            </div>
-
-            <div class="field" data-field="messenger">
-                <span class="field-label">Удобный способ связи</span>
-                <div class="segmented" role="radiogroup" aria-label="Способ связи">
-                    <input type="radio" id="modal-msg-wa" name="messenger" value="WhatsApp" checked />
-                    <label for="modal-msg-wa">WhatsApp</label>
-                    <input type="radio" id="modal-msg-tg" name="messenger" value="Telegram" />
-                    <label for="modal-msg-tg">Telegram</label>
-                    <input type="radio" id="modal-msg-call" name="messenger" value="Звонок" />
-                    <label for="modal-msg-call">Звонок</label>
-                </div>
             </div>
 
             <label class="consent" style="margin-top: 12px;">

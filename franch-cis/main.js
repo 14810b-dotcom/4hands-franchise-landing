@@ -629,7 +629,6 @@
             name:      (d.get('name')      || '').toString().trim(),
             phone:     (d.get('phone')     || '').toString().replace(/\D/g, ''),
             format:     (d.get('format')    || '') || null,
-            messenger:  (d.get('messenger') || '') || null,
             ads_consent: !!d.get('ads_consent'),
             source:     'franch-landing',
         };
