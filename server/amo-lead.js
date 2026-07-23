@@ -123,9 +123,8 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, city, format, budget, messenger, source, ads_consent } = data;
-        const resolvedFormat = format || budget || 'не указан';
-        const resolvedCity = (city || '').trim() || 'не указан';
+        const { name, phone, format, budget, messenger, source, ads_consent } = data;
+        const resolvedFormat = format || budget || 'франшиза';
 
         // Server-side validation
         if (!name || typeof name !== 'string' || name.trim().length < 2) {
@@ -152,7 +151,7 @@ const server = http.createServer(async (req, res) => {
             if (ads_consent) tags.push({ name: 'ads_consent' });
 
             await amoPost('/leads', [{
-                name: `Заявка ${resolvedCity} — ${resolvedFormat || 'франшиза'}`,
+                name: `Заявка — ${resolvedFormat}`,
                 pipeline_id: Number(AMO_PIPELINE_ID),
                 responsible_user_id: Number(AMO_RESPONSIBLE_USER_ID),
                 _embedded: {

@@ -405,16 +405,14 @@
             const d = new FormData(form);
             const name  = (d.get('name')  || '').toString().trim();
             const phone = (d.get('phone') || '').toString().replace(/\D/g, '');
-            const city  = (d.get('city')  || '').toString().trim();
             const consentInput = form.querySelector('input[name="consent"]');
             const consentLabel = consentInput?.closest('.consent');
             const ok1 = name.length >= 2;  setErr('name',  !ok1);
             const ok2 = phone.length >= 11; setErr('phone', !ok2);
-            const ok3 = city.length >= 2;  setErr('city',  !ok3);
             const ok4 = !!consentInput?.checked;
             if (!ok4) consentLabel?.classList.add('has-error');
             else consentLabel?.classList.remove('has-error');
-            return ok1 && ok2 && ok3 && ok4;
+            return ok1 && ok2 && ok4;
         };
 
         form.querySelectorAll('input').forEach((inp) => {
@@ -447,13 +445,13 @@
             btn.addEventListener('click', () => {
                 const formatName = btn.dataset.formatName || '';
                 const formatField = document.getElementById('formatField');
-                const cityInput = document.getElementById('cityInput');
+                const nameInput = document.querySelector('#leadForm input[name="name"]');
                 if (formatField) formatField.value = formatName;
                 const target = document.getElementById('capture');
                 if (target) {
                     const top = target.getBoundingClientRect().top + window.scrollY - 20;
                     window.scrollTo({ top, behavior: isReducedMotion ? 'auto' : 'smooth' });
-                    setTimeout(() => { if (cityInput) cityInput.focus(); }, 700);
+                    setTimeout(() => { if (nameInput) nameInput.focus(); }, 700);
                 }
             });
         });
@@ -577,14 +575,12 @@
             const data = new FormData(form);
             const name = (data.get('name') || '').toString().trim();
             const phone = (data.get('phone') || '').toString().replace(/\D/g, '');
-            const city = (data.get('city') || '').toString().trim();
             const consentInput = form.querySelector('input[name="consent"]');
             const consentLabel = consentInput?.closest('.consent');
             const consent = consentInput?.checked;
 
             if (name.length < 2) { setError('name', true); ok = false; } else setError('name', false);
             if (phone.length < 11) { setError('phone', true); ok = false; } else setError('phone', false);
-            if (city.length < 2) { setError('city', true); ok = false; } else setError('city', false);
             if (!consent) { consentLabel?.classList.add('has-error'); ok = false; }
             else { consentLabel?.classList.remove('has-error'); }
 
@@ -632,7 +628,6 @@
         const payload = {
             name:      (d.get('name')      || '').toString().trim(),
             phone:     (d.get('phone')     || '').toString().replace(/\D/g, ''),
-            city:      (d.get('city')      || '').toString().trim(),
             format:     (d.get('format')    || '') || null,
             messenger:  (d.get('messenger') || '') || null,
             ads_consent: !!d.get('ads_consent'),
