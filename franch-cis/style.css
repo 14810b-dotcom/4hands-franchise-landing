@@ -650,13 +650,13 @@ a { color: inherit; text-decoration: none; }
     opacity: 1;
 }
 
-/* Layer 2: дизайн-проект студии */
+/* Layer 2: дизайн-проект студии — план-схема, contain чтобы не резать чертёж */
 .path-layer.l2 {
-    background-image:
-        linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.45) 100%),
-        url('assets/images/path/step-2-plan.jpg');
-    background-size: cover;
+    background-image: url('assets/images/path/step-2-plan.jpg');
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
+    background-color: #F5F3F8;
 }
 
 /* Layer 3: оснащение — фирменные кресла 4hands */
@@ -2256,7 +2256,12 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     background-position: center;
 }
 .pms-location { background-image: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.5)), url('assets/images/path/step-1.jpg'); }
-.pms-renovation { background-image: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.5)), url('assets/images/path/step-2-plan.jpg'); }
+.pms-renovation {
+    background-image: url('assets/images/path/step-2-plan.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #F5F3F8;
+}
 .pms-equip { background-image: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('assets/images/path/step-3.jpg'); }
 .pms-launch { background-image: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.5)), url('assets/images/path/step-4.jpg'); }
 
