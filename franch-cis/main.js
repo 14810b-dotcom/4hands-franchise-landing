@@ -655,7 +655,7 @@
             if (successEl) successEl.classList.add('is-active');
 
             showToast('Заявка отправлена — переводим в Telegram');
-            setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 1200);
+            setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 2500);
 
             if (window.dataLayer) {
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
