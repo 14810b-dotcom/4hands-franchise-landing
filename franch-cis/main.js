@@ -9,7 +9,6 @@
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const TELEGRAM_BOT_URL = 'https://t.me/franchmanik_bot';
 
     // ----- Boot -----
     document.addEventListener('DOMContentLoaded', () => {
@@ -644,26 +643,15 @@
                 body: JSON.stringify(payload),
             });
 
-            // Also send to AMO when server is configured (silent fail if not ready)
-            fetch('/api/lead', {
+            // Also send to AMO when server is configured (silent fail if not ready) —
+            // awaited so navigation below doesn't cancel the request mid-flight
+            await fetch('/api/lead', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             }).catch(() => {});
 
-            form.style.display = 'none';
-            if (successEl) successEl.classList.add('is-active');
-
-            showToast('Заявка отправлена — переводим в Telegram');
-            setTimeout(() => { window.location.href = TELEGRAM_BOT_URL; }, 2500);
-
-            if (window.dataLayer) {
-                window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
-            }
-            if (typeof window.fbq === 'function') {
-                // TODO: убрать test_event_code после проверки в Meta Events Manager (Test events)
-                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' }, { test_event_code: 'TEST94793' });
-            }
+            window.location.href = 'thank-you.html';
             return true;
         } catch (err) {
             console.error('Lead submit error:', err);

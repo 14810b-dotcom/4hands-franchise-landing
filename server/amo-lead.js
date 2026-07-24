@@ -1,10 +1,14 @@
 import http from 'node:http';
+import crypto from 'node:crypto';
 
 const {
     AMO_SUBDOMAIN,
     AMO_TOKEN,
     AMO_PIPELINE_ID,
     AMO_RESPONSIBLE_USER_ID,
+    META_PIXEL_ID = '2113481812884524',
+    META_CAPI_TOKEN,
+    META_TEST_EVENT_CODE,
     PORT = '3001',
     ALLOWED_ORIGINS = 'https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru',
 } = process.env;
@@ -62,6 +66,44 @@ async function amoPost(path, body) {
         throw new Error(`AMO ${path} → ${resp.status}: ${text}`);
     }
     return resp.json();
+}
+
+function sha256(value) {
+    return crypto.createHash('sha256').update(value).digest('hex');
+}
+
+// Fire-and-forget: send Lead event to Meta Conversions API (server-side,
+// bypasses ad-blockers and page-navigation timing issues on the client).
+async function sendMetaLead({ phoneDigits, ip, userAgent, sourceUrl }) {
+    if (!META_CAPI_TOKEN) return;
+    try {
+        const payload = {
+            data: [{
+                event_name: 'Lead',
+                event_time: Math.floor(Date.now() / 1000),
+                action_source: 'website',
+                event_source_url: sourceUrl || 'https://franchbeaty.ru/',
+                user_data: {
+                    ph: [sha256(phoneDigits)],
+                    client_ip_address: ip,
+                    client_user_agent: userAgent,
+                },
+            }],
+            access_token: META_CAPI_TOKEN,
+        };
+        if (META_TEST_EVENT_CODE) payload.test_event_code = META_TEST_EVENT_CODE;
+
+        const resp = await fetch(`https://graph.facebook.com/v21.0/${META_PIXEL_ID}/events`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        });
+        if (!resp.ok) {
+            console.error('Meta CAPI error:', resp.status, await resp.text());
+        }
+    } catch (err) {
+        console.error('Meta CAPI request failed:', err.message);
+    }
 }
 
 function setCors(res, origin) {
@@ -159,6 +201,8 @@ const server = http.createServer(async (req, res) => {
                     tags,
                 },
             }]);
+
+            sendMetaLead({ phoneDigits, ip, userAgent: req.headers['user-agent'], sourceUrl: origin }).catch(() => {});
 
             return json(res, 200, { ok: true }, origin);
         } catch (err) {
