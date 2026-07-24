@@ -651,7 +651,7 @@
                 body: JSON.stringify(payload),
             }).catch(() => {});
 
-            window.location.href = 'thank-you.html';
+            window.location.href = '/thank-you';
             return true;
         } catch (err) {
             console.error('Lead submit error:', err);
