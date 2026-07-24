@@ -662,7 +662,7 @@
             }
             if (typeof window.fbq === 'function') {
                 // TODO: убрать test_event_code после проверки в Meta Events Manager (Test events)
-                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' }, { test_event_code: 'TEST49180' });
+                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' }, { test_event_code: 'TEST94793' });
             }
             return true;
         } catch (err) {
