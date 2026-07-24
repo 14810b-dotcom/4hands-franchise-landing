@@ -660,6 +660,9 @@
             if (window.dataLayer) {
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
             }
+            if (typeof window.fbq === 'function') {
+                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' });
+            }
             return true;
         } catch (err) {
             console.error('Lead submit error:', err);
