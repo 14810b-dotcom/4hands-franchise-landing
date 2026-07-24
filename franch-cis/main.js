@@ -661,7 +661,8 @@
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
             }
             if (typeof window.fbq === 'function') {
-                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' });
+                // TODO: убрать test_event_code после проверки в Meta Events Manager (Test events)
+                window.fbq('track', 'Lead', { content_name: payload.format || 'франшиза' }, { test_event_code: 'TEST49180' });
             }
             return true;
         } catch (err) {
