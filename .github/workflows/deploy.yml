@@ -29,6 +29,8 @@ jobs:
             export AMO_TOKEN='${{ secrets.AMO_TOKEN }}'
             export AMO_PIPELINE_ID='${{ secrets.AMO_PIPELINE_ID }}'
             export AMO_RESPONSIBLE_USER_ID='${{ secrets.AMO_RESPONSIBLE_USER_ID }}'
+            export AMO_PIPELINE_ID_UZ='${{ secrets.AMO_PIPELINE_ID_UZ }}'
+            export AMO_RESPONSIBLE_USER_ID_UZ='${{ secrets.AMO_RESPONSIBLE_USER_ID_UZ }}'
             export ALLOWED_ORIGINS='https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru'
 
             if [ -n "$AMO_TOKEN" ]; then

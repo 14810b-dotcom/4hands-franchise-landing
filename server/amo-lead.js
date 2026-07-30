@@ -6,6 +6,8 @@ const {
     AMO_TOKEN,
     AMO_PIPELINE_ID,
     AMO_RESPONSIBLE_USER_ID,
+    AMO_PIPELINE_ID_UZ,
+    AMO_RESPONSIBLE_USER_ID_UZ,
     META_PIXEL_ID = '2113481812884524',
     META_CAPI_TOKEN,
     META_TEST_EVENT_CODE,
@@ -165,8 +167,16 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, format, budget, messenger, source, ads_consent } = data;
+        const { name, phone, format, budget, messenger, source, ads_consent, market } = data;
         const resolvedFormat = format || budget || 'франшиза';
+
+        // UZ leads go to their own pipeline once it's configured; falls back
+        // to the default (KZ) pipeline so leads never get silently dropped.
+        const useUzPipeline = market === 'uz' && AMO_PIPELINE_ID_UZ;
+        const pipelineId = useUzPipeline ? Number(AMO_PIPELINE_ID_UZ) : Number(AMO_PIPELINE_ID);
+        const responsibleUserId = useUzPipeline
+            ? Number(AMO_RESPONSIBLE_USER_ID_UZ || AMO_RESPONSIBLE_USER_ID)
+            : Number(AMO_RESPONSIBLE_USER_ID);
 
         // Server-side validation
         if (!name || typeof name !== 'string' || name.trim().length < 2) {
@@ -191,11 +201,12 @@ const server = http.createServer(async (req, res) => {
             const tags = [{ name: source || 'franch-landing' }];
             if (messenger) tags.push({ name: `messenger:${messenger}` });
             if (ads_consent) tags.push({ name: 'ads_consent' });
+            if (market) tags.push({ name: `market:${market}` });
 
             await amoPost('/leads', [{
                 name: `Заявка — ${resolvedFormat}`,
-                pipeline_id: Number(AMO_PIPELINE_ID),
-                responsible_user_id: Number(AMO_RESPONSIBLE_USER_ID),
+                pipeline_id: pipelineId,
+                responsible_user_id: responsibleUserId,
                 _embedded: {
                     contacts: [{ id: contactId }],
                     tags,
