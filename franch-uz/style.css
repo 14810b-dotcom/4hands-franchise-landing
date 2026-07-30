@@ -694,8 +694,10 @@ a { color: inherit; text-decoration: none; }
     .path-pin {
         grid-template-columns: 1fr 360px;
         gap: 60px;
-        place-items: center;
+        align-items: start;
+        justify-items: center;
         padding-inline: 40px;
+        padding-top: 100px;
     }
     .path-stage { margin-left: auto; }
     .path-steps {
