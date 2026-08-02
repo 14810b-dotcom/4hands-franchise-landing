@@ -407,7 +407,7 @@
             const consentInput = form.querySelector('input[name="consent"]');
             const consentLabel = consentInput?.closest('.consent');
             const ok1 = name.length >= 2;  setErr('name',  !ok1);
-            const ok2 = phone.length >= 11; setErr('phone', !ok2);
+            const ok2 = phone.length >= 12; setErr('phone', !ok2);
             const ok4 = !!consentInput?.checked;
             if (!ok4) consentLabel?.classList.add('has-error');
             else consentLabel?.classList.remove('has-error');
@@ -525,22 +525,20 @@
     }
 
     // --------------------------------------------------------------------
-    // RU phone mask: +7 (___) ___-__-__
+    // UZ phone mask: +998 __ ___-__-__
     // --------------------------------------------------------------------
     function applyPhoneMask(input) {
         if (!input) return;
         const format = (val) => {
             let digits = val.replace(/\D/g, '');
-            if (digits.length && digits[0] === '8') digits = '7' + digits.slice(1);
-            if (digits.length && digits[0] !== '7') digits = '7' + digits;
-            digits = digits.slice(0, 11);
-            const d = digits.slice(1);
-            let out = '+7';
-            if (d.length > 0) out += ' (' + d.slice(0, 3);
-            if (d.length >= 3) out += ')';
-            if (d.length >= 4) out += ' ' + d.slice(3, 6);
-            if (d.length >= 7) out += '-' + d.slice(6, 8);
-            if (d.length >= 9) out += '-' + d.slice(8, 10);
+            if (digits.startsWith('998')) digits = digits.slice(3);
+            else if (digits.startsWith('0')) digits = digits.slice(1);
+            digits = digits.slice(0, 9);
+            let out = '+998';
+            if (digits.length > 0) out += ' ' + digits.slice(0, 2);
+            if (digits.length >= 3) out += ' ' + digits.slice(2, 5);
+            if (digits.length >= 6) out += '-' + digits.slice(5, 7);
+            if (digits.length >= 8) out += '-' + digits.slice(7, 9);
             return out;
         };
         input.addEventListener('input', () => {
@@ -548,8 +546,8 @@
             input.value = format(input.value);
             if (end) input.setSelectionRange(input.value.length, input.value.length);
         });
-        input.addEventListener('focus', () => { if (!input.value) input.value = '+7 ('; });
-        input.addEventListener('blur',  () => { if (input.value === '+7 (') input.value = ''; });
+        input.addEventListener('focus', () => { if (!input.value) input.value = '+998 '; });
+        input.addEventListener('blur',  () => { if (input.value === '+998 ') input.value = ''; });
     }
 
     function initPhoneMask() {
@@ -579,7 +577,7 @@
             const consent = consentInput?.checked;
 
             if (name.length < 2) { setError('name', true); ok = false; } else setError('name', false);
-            if (phone.length < 11) { setError('phone', true); ok = false; } else setError('phone', false);
+            if (phone.length < 12) { setError('phone', true); ok = false; } else setError('phone', false);
             if (!consent) { consentLabel?.classList.add('has-error'); ok = false; }
             else { consentLabel?.classList.remove('has-error'); }
 
