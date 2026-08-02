@@ -1,5 +1,8 @@
 import http from 'node:http';
 import crypto from 'node:crypto';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const {
     AMO_SUBDOMAIN,
@@ -8,11 +11,15 @@ const {
     AMO_RESPONSIBLE_USER_ID,
     AMO_PIPELINE_ID_UZ,
     AMO_RESPONSIBLE_USER_ID_UZ,
+    AMO_PIPELINE_ID_RU,
+    AMO_RESPONSIBLE_USER_ID_RU,
     META_PIXEL_ID = '2113481812884524',
     META_CAPI_TOKEN,
     META_TEST_EVENT_CODE,
     PORT = '3001',
     ALLOWED_ORIGINS = 'https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru',
+    LEADS_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data', 'leads.jsonl'),
+    LEADS_EXPORT_TOKEN,
 } = process.env;
 
 const allowedOrigins = ALLOWED_ORIGINS.split(',').map(s => s.trim()).filter(Boolean);
@@ -72,6 +79,49 @@ async function amoPost(path, body) {
 
 function sha256(value) {
     return crypto.createHash('sha256').update(value).digest('hex');
+}
+
+// Persist every lead to a local JSONL file, independent of AMO/Sheets —
+// so a lead is never lost if an external service is down or unreachable.
+async function appendLead(record) {
+    try {
+        await fs.mkdir(path.dirname(LEADS_FILE), { recursive: true });
+        await fs.appendFile(LEADS_FILE, JSON.stringify(record) + '\n');
+    } catch (err) {
+        console.error('appendLead failed:', err.message);
+    }
+}
+
+async function readLeads({ since } = {}) {
+    let raw;
+    try {
+        raw = await fs.readFile(LEADS_FILE, 'utf8');
+    } catch {
+        return [];
+    }
+    const sinceDate = since ? new Date(since) : null;
+    const leads = [];
+    for (const line of raw.split('\n')) {
+        if (!line.trim()) continue;
+        try {
+            const record = JSON.parse(line);
+            if (sinceDate && new Date(record.timestamp) < sinceDate) continue;
+            leads.push(record);
+        } catch (err) {
+            console.error('Skipping malformed lead line:', err.message);
+        }
+    }
+    return leads;
+}
+
+function leadsToCsv(leads) {
+    const columns = ['timestamp', 'source', 'market', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'amo_status', 'ip'];
+    const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const rows = [columns.join(',')];
+    for (const lead of leads) {
+        rows.push(columns.map(c => escape(lead[c])).join(','));
+    }
+    return rows.join('\n');
 }
 
 // Fire-and-forget: send Lead event to Meta Conversions API (server-side,
@@ -136,6 +186,23 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    // Local leads export — bearer-token protected, no CORS/origin needed
+    // since it's only ever called manually (curl), not from the browser.
+    if (req.method === 'GET' && req.url.startsWith('/api/leads')) {
+        const authHeader = req.headers['authorization'] || '';
+        const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+        if (!LEADS_EXPORT_TOKEN || token !== LEADS_EXPORT_TOKEN) {
+            return json(res, 404, { ok: false, error: 'not_found' }, origin);
+        }
+        const reqUrl = new URL(req.url, 'http://localhost');
+        const leads = await readLeads({ since: reqUrl.searchParams.get('since') });
+        if (reqUrl.searchParams.get('format') === 'csv') {
+            res.writeHead(200, { 'Content-Type': 'text/csv; charset=utf-8' });
+            return res.end(leadsToCsv(leads));
+        }
+        return json(res, 200, { ok: true, count: leads.length, leads }, origin);
+    }
+
     if (req.method !== 'POST' || req.url !== '/api/lead') {
         return json(res, 404, { ok: false, error: 'not_found' }, origin);
     }
@@ -170,12 +237,17 @@ const server = http.createServer(async (req, res) => {
         const { name, phone, format, budget, messenger, source, ads_consent, market } = data;
         const resolvedFormat = format || budget || 'франшиза';
 
-        // UZ leads go to their own pipeline once it's configured; falls back
-        // to the default (KZ) pipeline so leads never get silently dropped.
-        const useUzPipeline = market === 'uz' && AMO_PIPELINE_ID_UZ;
-        const pipelineId = useUzPipeline ? Number(AMO_PIPELINE_ID_UZ) : Number(AMO_PIPELINE_ID);
-        const responsibleUserId = useUzPipeline
-            ? Number(AMO_RESPONSIBLE_USER_ID_UZ || AMO_RESPONSIBLE_USER_ID)
+        // Per-market pipeline routing. Each market falls back to the default
+        // pipeline until its own AMO_PIPELINE_ID_* secret is set, so leads
+        // never get silently dropped while a new market is being wired up.
+        const MARKET_PIPELINES = {
+            uz: { pipeline: AMO_PIPELINE_ID_UZ, responsible: AMO_RESPONSIBLE_USER_ID_UZ },
+            ru: { pipeline: AMO_PIPELINE_ID_RU, responsible: AMO_RESPONSIBLE_USER_ID_RU },
+        };
+        const marketRoute = MARKET_PIPELINES[market];
+        const pipelineId = marketRoute?.pipeline ? Number(marketRoute.pipeline) : Number(AMO_PIPELINE_ID);
+        const responsibleUserId = marketRoute?.pipeline
+            ? Number(marketRoute.responsible || AMO_RESPONSIBLE_USER_ID)
             : Number(AMO_RESPONSIBLE_USER_ID);
 
         // Server-side validation
@@ -186,6 +258,20 @@ const server = http.createServer(async (req, res) => {
         if (phoneDigits.length < 10) {
             return json(res, 400, { ok: false, error: 'invalid_phone' }, origin);
         }
+
+        // Persist locally first — a lead must survive even if AMO is down.
+        const leadRecord = {
+            timestamp: new Date().toISOString(),
+            source: source || 'franch-landing',
+            market: market || null,
+            name: name.trim(),
+            phone: phoneDigits,
+            format: resolvedFormat,
+            messenger: messenger || null,
+            ads_consent: !!ads_consent,
+            ip,
+        };
+        await appendLead({ ...leadRecord, amo_status: 'pending' });
 
         try {
             // 1. Create contact
