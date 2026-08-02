@@ -651,6 +651,7 @@
             ads_consent: !!d.get('ads_consent'),
             source:     'franch-landing',
             market:     'ru',
+            site:       'franch',
         };
 
         const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxtUkvpbRA_6ChtFTAtEQOD-uWWTdrvlSHqKfVviY8PtxydIOTgO8g7OVc5Y-hRuwv6/exec';

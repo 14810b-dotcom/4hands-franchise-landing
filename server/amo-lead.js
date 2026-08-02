@@ -234,7 +234,11 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, format, budget, messenger, source, ads_consent, market } = data;
+        const { name, phone, format, budget, messenger, source, ads_consent, market, site } = data;
+
+        // Site-specific tags (only for sites that opt in via the `site` field —
+        // KZ/UZ landings don't send it, so they're untouched).
+        const SITE_TAGS = { franch: 'franch', 'salon-krasoty': 'salon krasoty' };
         const resolvedFormat = format || budget || 'франшиза';
 
         // Per-market pipeline routing. Each market falls back to the default
@@ -288,6 +292,10 @@ const server = http.createServer(async (req, res) => {
             if (messenger) tags.push({ name: `messenger:${messenger}` });
             if (ads_consent) tags.push({ name: 'ads_consent' });
             if (market) tags.push({ name: `market:${market}` });
+            if (SITE_TAGS[site]) {
+                tags.push({ name: 'ИИ Сайты' });
+                tags.push({ name: SITE_TAGS[site] });
+            }
 
             await amoPost('/leads', [{
                 name: `Заявка — ${resolvedFormat}`,
