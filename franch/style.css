@@ -555,6 +555,11 @@ a { color: inherit; text-decoration: none; }
     background: var(--grad-cta);
     box-shadow: 0 0 12px rgba(237, 44, 238, 0.5);
 }
+.logo-img {
+    height: 27px;
+    width: auto;
+    display: block;
+}
 
 /* --------------------------------------------------------------------------
    Marquee
