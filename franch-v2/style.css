@@ -1184,6 +1184,9 @@ a { color: inherit; text-decoration: none; }
 
 .founder-portrait {
     aspect-ratio: 4 / 5;
+    max-height: 420px;
+    margin-inline: auto;
+    width: 100%;
     border-radius: 32px;
     overflow: hidden;
     background:
