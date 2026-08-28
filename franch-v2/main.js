@@ -96,7 +96,7 @@
                     io.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+        }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });
         els.forEach((el) => {
             if (el.classList.contains('timeline-item')) return; // GSAP handles these
             io.observe(el);
