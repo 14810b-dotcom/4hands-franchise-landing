@@ -14,6 +14,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         initScrollProgress();
         initStickyNav();
+        initMobileCta();
         initSmoothAnchors();
         initModal();
         initRevealOnScroll();
@@ -61,6 +62,25 @@
         };
         window.addEventListener('scroll', trigger, { passive: true });
         trigger();
+    }
+
+    // --------------------------------------------------------------------
+    // Mobile pinned CTA — show past the hero, hide over the form itself
+    // --------------------------------------------------------------------
+    function initMobileCta() {
+        const cta = document.getElementById('mobileCta');
+        const capture = document.getElementById('capture');
+        if (!cta) return;
+        const update = () => {
+            const pastHero = window.scrollY > window.innerHeight * 0.7;
+            const atForm = capture
+                ? capture.getBoundingClientRect().top < window.innerHeight * 0.9
+                : false;
+            cta.classList.toggle('is-visible', pastHero && !atForm);
+        };
+        window.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
     }
 
     // --------------------------------------------------------------------
