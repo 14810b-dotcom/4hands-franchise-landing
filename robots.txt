@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /franch-v2
 
 Sitemap: https://4you.4hands.ru/sitemap.xml
