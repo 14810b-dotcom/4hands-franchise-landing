@@ -619,8 +619,8 @@ a { color: inherit; text-decoration: none; }
     height: 100vh;
     display: grid;
     justify-items: center;
-    align-items: start;
-    padding-top: max(96px, 12vh);
+    align-items: center;
+    padding-top: 24px;
     overflow: hidden;
 }
 
@@ -792,7 +792,7 @@ a { color: inherit; text-decoration: none; }
         grid-template-columns: minmax(0, 760px) 340px;
         gap: 56px;
         justify-content: center;
-        align-items: start;
+        align-items: center;
         padding-inline: 40px;
     }
     .path-stage { margin-left: 0; width: 100%; }
@@ -1019,7 +1019,9 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 700px) {
     .bento {
         grid-template-columns: repeat(6, 1fr);
-        grid-auto-rows: 200px;
+        /* Rows grow past the 200px baseline instead of clipping — tiles carry
+           a metric pill now, so content length varies between siblings. */
+        grid-auto-rows: minmax(200px, auto);
         gap: 20px;
     }
     .bento-tile.lg { grid-column: span 4; grid-row: span 1; }
@@ -1304,7 +1306,9 @@ a { color: inherit; text-decoration: none; }
 .mobile-cta.is-visible { opacity: 1; transform: translateY(0); }
 @media (max-width: 767px) {
     .mobile-cta { display: block; }
-    body { padding-bottom: 0; }
+    /* Header CTA would crowd the logo at this width, and the pinned bar
+       below already carries the same action. */
+    .sticky-nav-inner .btn { display: none; }
 }
 
 /* Market-position strip — our number over the category's, side by side */
@@ -1355,10 +1359,12 @@ a { color: inherit; text-decoration: none; }
 .tile-stat {
     display: inline-flex;
     align-items: baseline;
-    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 100%;
+    gap: 4px 6px;
     margin-top: 14px;
     padding: 7px 14px;
-    border-radius: 999px;
+    border-radius: 16px;
     background: #F0EBF8;
     color: var(--c-purple);
     font-family: var(--font-display);
