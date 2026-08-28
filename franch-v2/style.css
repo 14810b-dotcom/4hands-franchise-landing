@@ -235,7 +235,10 @@ a { color: inherit; text-decoration: none; }
                 background-color 0.3s ease,
                 color 0.3s ease;
     min-height: 54px;
-    white-space: nowrap;
+    /* Long labels ("Рассчитать прибыль для моего города") ran past the pill
+       edge while nowrap was set — let them wrap instead of overflowing. */
+    white-space: normal;
+    text-wrap: balance;
     text-align: center;
     will-change: transform;
     max-width: 100%;
