@@ -9,6 +9,8 @@
     --c-purple-light: #A06DD4;   /* hover / tint          */
     --c-purple-deep:  #5A2A82;   /* pressed / dark        */
     --c-pink:         #ED2CEE;   /* hot accent / fuchsia  */
+    --c-gold:         #E5AE6A;   /* brandbook warm accent */
+    --c-gold-deep:    #A9742F;   /* gold on light bg      */
     --c-pink-light:   #F478F5;
     --c-pink-glow:    rgba(237, 44, 238, 0.22);
     --c-purple-glow:  rgba(124, 63, 174, 0.18);
@@ -152,14 +154,27 @@ a { color: inherit; text-decoration: none; }
 .font-display { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; }
 .font-body { font-family: var(--font-body); }
 
+/* Eyebrow carries the brandbook's warm accent and a short rule, so section
+   openers read as typeset rather than as another tinted label. */
 .h-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-body);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--c-graphite);
+    color: var(--c-gold-deep);
 }
+.h-eyebrow::before {
+    content: '';
+    width: 26px;
+    height: 2px;
+    background: var(--c-gold);
+    flex-shrink: 0;
+}
+.is-dark .h-eyebrow { color: var(--c-gold); }
 
 .h1 {
     font-family: var(--font-display);
@@ -476,7 +491,7 @@ a { color: inherit; text-decoration: none; }
     position: fixed;
     top: 0; left: 0;
     height: 2px;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     z-index: 100;
     width: 0;
     transition: width 0.1s linear;
@@ -522,7 +537,7 @@ a { color: inherit; text-decoration: none; }
     position: absolute;
     left: 0; right: 0; bottom: -4px;
     height: 2px;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     border-radius: 2px;
     transform: scaleX(0);
     transform-origin: left;
@@ -552,7 +567,7 @@ a { color: inherit; text-decoration: none; }
 .logo-dot {
     width: 8px; height: 8px;
     border-radius: 50%;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     box-shadow: 0 0 12px rgba(237, 44, 238, 0.5);
 }
 .logo-img {
@@ -613,14 +628,15 @@ a { color: inherit; text-decoration: none; }
     background: var(--c-ivory);
 }
 
+/* Height follows the content instead of a flat 100vh: at 100vh the stage
+   (~540px) left 350px of dead space that read as a broken gap above or
+   below it, depending on alignment. Sticky offset clears the fixed header. */
 .path-pin {
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 96px;
     display: grid;
     justify-items: center;
     align-items: start;
-    padding-top: 40px;
     overflow: hidden;
 }
 
@@ -831,7 +847,7 @@ a { color: inherit; text-decoration: none; }
     font-size: 12px;
     font-weight: 700;
 }
-.path-step.is-active .path-step-num { background: var(--grad-cta); color: #fff; }
+.path-step.is-active .path-step-num { background: var(--c-purple); color: #fff; }
 .path-step-title {
     font-family: var(--font-display);
     font-weight: 700;
@@ -1054,7 +1070,7 @@ a { color: inherit; text-decoration: none; }
 .bento-icon {
     width: 48px; height: 48px;
     border-radius: 14px;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     display: grid;
     place-items: center;
     box-shadow: 0 8px 16px -8px rgba(124, 63, 174, 0.45);
@@ -1297,7 +1313,7 @@ a { color: inherit; text-decoration: none; }
     border-radius: 50%;
     display: grid;
     place-items: center;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     color: #fff;
     font-family: var(--font-display);
     font-weight: 700;
@@ -1365,13 +1381,11 @@ a { color: inherit; text-decoration: none; }
 .market-val {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(26px, 3vw, 36px);
+    font-size: clamp(28px, 3.2vw, 40px);
     line-height: 1;
-    letter-spacing: -0.03em;
-    background: var(--grad-cta);
-    -webkit-background-clip: text;
-            background-clip: text;
-    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+    color: var(--c-ink);
+    font-variant-numeric: tabular-nums;
 }
 .market-lbl {
     margin-top: 8px;
@@ -1463,7 +1477,7 @@ a { color: inherit; text-decoration: none; }
     place-items: center;
     transition: transform 0.4s var(--ease-out-expo), background 0.3s ease;
 }
-.faq-item[open] .faq-chevron { transform: rotate(45deg); background: var(--grad-cta); color: #fff; }
+.faq-item[open] .faq-chevron { transform: rotate(45deg); background: var(--c-purple); color: #fff; }
 
 .composition-details {
     background: #FFFFFF;
@@ -1471,7 +1485,7 @@ a { color: inherit; text-decoration: none; }
     border-radius: 20px;
     padding: 4px 24px;
 }
-.composition-details[open] .faq-chevron { transform: rotate(45deg); background: var(--grad-cta); color: #fff; }
+.composition-details[open] .faq-chevron { transform: rotate(45deg); background: var(--c-purple); color: #fff; }
 
 .faq-body {
     display: grid;
@@ -1525,7 +1539,7 @@ a { color: inherit; text-decoration: none; }
 .capture-bullet .ico {
     width: 28px; height: 28px;
     border-radius: 50%;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     display: grid;
     place-items: center;
     flex-shrink: 0;
@@ -1646,7 +1660,7 @@ a { color: inherit; text-decoration: none; }
 .form-success-ico {
     width: 64px; height: 64px;
     border-radius: 50%;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     display: grid;
     place-items: center;
     margin: 0 auto 20px;
@@ -1862,7 +1876,7 @@ a { color: inherit; text-decoration: none; }
     border-radius: 50%;
     border: 2px solid #FFFFFF;
     margin-left: -8px;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     flex-shrink: 0;
 }
 .hero-trust-avatars span:first-child { margin-left: 0; }
@@ -2037,7 +2051,7 @@ body.modal-open { overflow: hidden; }
     flex-shrink: 0;
     width: 40px; height: 40px;
     border-radius: 50%;
-    background: var(--grad-cta);
+    background: var(--c-purple);
     color: #fff;
     font-weight: 800;
     font-size: 13px;
@@ -2125,12 +2139,10 @@ body.modal-open { overflow: hidden; }
 .testdrive-stat-val {
     font-size: clamp(28px, 5vw, 40px);
     font-weight: 800;
-    color: #FFFFFF;
+    color: var(--c-gold);
     line-height: 1;
-    background: var(--grad-cta);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
 }
 
 .testdrive-stat-lbl {
@@ -2314,7 +2326,7 @@ body.modal-open { overflow: hidden; }
 
 .timeline-dot--current {
     border-color: var(--c-purple);
-    background: var(--grad-cta);
+    background: var(--c-purple);
     box-shadow: 0 0 0 6px rgba(124,63,174,0.12), 0 4px 14px -4px rgba(124,63,174,0.5);
 }
 
