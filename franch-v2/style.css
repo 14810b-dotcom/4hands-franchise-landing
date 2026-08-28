@@ -1241,6 +1241,50 @@ a { color: inherit; text-decoration: none; }
     max-width: 860px;
     margin-inline: auto;
 }
+/* Market-position strip — our number over the category's, side by side */
+.market-strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-bottom: 44px;
+    background: var(--c-line);
+    border: 1px solid var(--c-line);
+    border-radius: 24px;
+    overflow: hidden;
+}
+@media (min-width: 900px) {
+    .market-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.market-item {
+    background: #FFFFFF;
+    padding: 26px 22px;
+}
+.market-val {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(26px, 3vw, 36px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    background: var(--grad-cta);
+    -webkit-background-clip: text;
+            background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.market-lbl {
+    margin-top: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--c-ink);
+}
+.market-vs {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--c-line);
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: var(--c-graphite);
+}
+
 /* Number pill on a capability card — the metric leads, prose supports it */
 .tile-stat {
     display: inline-flex;
@@ -1838,6 +1882,24 @@ body.modal-open { overflow: hidden; }
    Test Drive block
    -------------------------------------------------------------------------- */
 .testdrive-section { overflow: hidden; }
+
+/* Dark anchor: breaks the run of near-identical light sections and puts the
+   free-trial offer — our main differentiator — visually first among equals. */
+.testdrive-section.is-dark {
+    background: radial-gradient(ellipse 80% 60% at 15% 0%, rgba(124, 63, 174, 0.35), transparent 60%), #17171A;
+    color: var(--c-ivory);
+}
+.testdrive-section.is-dark .h2 { color: var(--c-ivory); }
+.testdrive-section.is-dark .lead { color: rgba(250, 247, 242, 0.72); }
+.testdrive-section.is-dark .h-eyebrow { color: var(--c-purple-light); }
+.testdrive-section.is-dark .testdrive-day-title { color: var(--c-ivory); }
+.testdrive-section.is-dark .testdrive-day-desc { color: rgba(250, 247, 242, 0.6); }
+.testdrive-section.is-dark .testdrive-free { color: rgba(250, 247, 242, 0.65); }
+.testdrive-section.is-dark .testdrive-stats-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+}
 
 .testdrive-inner {
     display: grid;
