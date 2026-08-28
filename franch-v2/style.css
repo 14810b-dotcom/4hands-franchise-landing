@@ -1274,6 +1274,14 @@ a { color: inherit; text-decoration: none; }
 }
 .faq-item[open] .faq-chevron { transform: rotate(45deg); background: var(--grad-cta); color: #fff; }
 
+.composition-details {
+    background: #FFFFFF;
+    border: 1px solid var(--c-line);
+    border-radius: 20px;
+    padding: 4px 24px;
+}
+.composition-details[open] .faq-chevron { transform: rotate(45deg); background: var(--grad-cta); color: #fff; }
+
 .faq-body {
     display: grid;
     grid-template-rows: 0fr;
