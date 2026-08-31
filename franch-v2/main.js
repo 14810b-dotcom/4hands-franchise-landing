@@ -23,6 +23,7 @@
         initParallax();
         initPathAnimation();
         initCasesSlider();
+        initVideoTestimonials();
         initFAQ();
         initCustomCursor();
         initTilt();
@@ -329,6 +330,28 @@
                 else if (p > 0.25) stepIdx = 1;
                 steps.forEach((s, i) => s.classList.toggle('is-active', i === stepIdx));
             },
+        });
+    }
+
+    // --------------------------------------------------------------------
+    // Video testimonials — swap thumbnail for a YouTube iframe on click.
+    // Cards without a data-youtube-id yet are visibly disabled (see CSS)
+    // rather than doing nothing on click — TODO: fill IDs when supplied.
+    // --------------------------------------------------------------------
+    function initVideoTestimonials() {
+        document.querySelectorAll('.video-play').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const id = btn.dataset.youtubeId;
+                if (!id) return;
+                const card = btn.closest('.video-card');
+                const iframe = document.createElement('iframe');
+                iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+                iframe.title = btn.getAttribute('aria-label') || 'Видео-интервью';
+                iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+                iframe.allowFullscreen = true;
+                card.appendChild(iframe);
+                card.classList.add('is-playing');
+            });
         });
     }
 
