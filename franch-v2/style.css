@@ -2705,7 +2705,7 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
 }
 .video-card {
     flex: 0 0 auto;
-    width: min(320px, 82vw);
+    width: min(420px, 86vw);
     scroll-snap-align: start;
     border-radius: 20px;
     overflow: hidden;
@@ -2723,7 +2723,7 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
    the (cross-origin, unstyleable) VK player chrome loads inside it. */
 .video-frame {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 16 / 9;
     background:
         linear-gradient(160deg, rgba(231,128,188,0.22), transparent 55%),
         linear-gradient(135deg, #3a3a3f, #17171a);
