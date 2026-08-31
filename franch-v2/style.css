@@ -2689,7 +2689,9 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
 }
 
 /* --------------------------------------------------------------------------
-   Video testimonials — horizontal track, YouTube swapped in on click
+   Video testimonials — media frame on top (real VK poster, lazy-loaded on
+   scroll), solid caption panel below. Two-part card reads as designed
+   rather than a flat rectangle with text floating over a gradient.
    -------------------------------------------------------------------------- */
 .video-track {
     display: flex;
@@ -2697,57 +2699,61 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     margin-top: 44px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    padding-bottom: 8px;
+    padding: 4px 4px 12px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
 }
 .video-card {
-    position: relative;
     flex: 0 0 auto;
-    width: min(340px, 84vw);
-    aspect-ratio: 3 / 4;
+    width: min(320px, 82vw);
     scroll-snap-align: start;
     border-radius: 20px;
     overflow: hidden;
-    background:
-        linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.88) 100%),
-        linear-gradient(135deg, #3a3a3f, #17171a);
+    background: #202024;
     border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 44px -24px rgba(0,0,0,0.6);
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo), border-color 0.4s ease;
 }
-.video-card iframe {
+.video-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--c-accent);
+    box-shadow: 0 28px 56px -22px rgba(0,0,0,0.7);
+}
+/* Brand-colour cap so the card commits to a visual identity even before
+   the (cross-origin, unstyleable) VK player chrome loads inside it. */
+.video-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background:
+        linear-gradient(160deg, rgba(231,128,188,0.22), transparent 55%),
+        linear-gradient(135deg, #3a3a3f, #17171a);
+    border-bottom: 3px solid var(--c-accent);
+}
+.video-frame iframe {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     border: 0;
 }
-.video-play {
+.video-frame-badge {
     position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: rgba(255,255,255,0.95);
-    color: var(--c-ink);
-    border: none;
-    cursor: pointer;
-    z-index: 2;
-    transition: transform 0.3s var(--ease-out-expo), background 0.3s ease;
-}
-.video-play:hover { transform: translate(-50%, -50%) scale(1.08); background: #fff; }
-/* No YouTube id yet — visibly disabled rather than a dead-feeling click */
-.video-play[data-embed-src=""] { opacity: 0.45; cursor: not-allowed; }
-.video-card.is-playing .video-play,
-.video-card.is-playing .video-card-body { display: none; }
-
-.video-card-body {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
+    top: 14px; left: 14px;
     z-index: 1;
-    padding: 20px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(6px);
+    color: var(--c-ivory);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    pointer-events: none;
 }
+.video-frame.is-loaded .video-frame-badge { display: none; }
+
+.video-card-body { padding: 20px; }
 .video-name {
     font-family: var(--font-display);
     font-weight: 700;
@@ -2763,20 +2769,11 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     margin-top: 10px;
     font-size: 13.5px;
     line-height: 1.5;
-    color: rgba(248,245,255,0.82);
+    color: rgba(248,245,255,0.78);
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
-}
-.video-watch {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--c-accent);
-    text-decoration: underline;
-    text-underline-offset: 3px;
 }
 @media (max-width: 767px) {
     .video-track { margin-inline: -20px; padding-inline: 20px; }

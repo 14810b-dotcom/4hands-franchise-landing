@@ -362,26 +362,43 @@
     }
 
     // --------------------------------------------------------------------
-    // Video testimonials — swap thumbnail for an embedded player on click.
-    // Interviews live on VK Video (video_ext.php), not YouTube — src is
-    // stored whole in data-embed-src so any embeddable source works the
-    // same way. Cards without one yet are visibly disabled (see CSS).
+    // Video testimonials — lazy-embed the VK player once its frame scrolls
+    // into view. Loading eagerly on page load would mean five VK players
+    // booting at once; loading only on click would show a flat placeholder
+    // instead of VK's real thumbnail (the point of this pass). Scroll-lazy
+    // is the middle ground: real poster art, without the eager cost.
     // --------------------------------------------------------------------
     function initVideoTestimonials() {
-        document.querySelectorAll('.video-play').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                const src = btn.dataset.embedSrc;
-                if (!src) return;
-                const card = btn.closest('.video-card');
-                const iframe = document.createElement('iframe');
-                iframe.src = src;
-                iframe.title = btn.getAttribute('aria-label') || 'Видео-интервью';
-                iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-                iframe.allowFullscreen = true;
-                card.appendChild(iframe);
-                card.classList.add('is-playing');
+        const frames = document.querySelectorAll('.video-frame');
+        if (!frames.length) return;
+
+        const load = (frame) => {
+            const src = frame.dataset.embedSrc;
+            if (!src || frame.classList.contains('is-loaded')) return;
+            const iframe = document.createElement('iframe');
+            iframe.src = src;
+            iframe.title = frame.getAttribute('aria-label') || 'Видео-интервью';
+            iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+            iframe.allowFullscreen = true;
+            iframe.loading = 'lazy';
+            frame.appendChild(iframe);
+            frame.classList.add('is-loaded');
+        };
+
+        if (isReducedMotion) {
+            frames.forEach(load);
+            return;
+        }
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    load(entry.target);
+                    io.unobserve(entry.target);
+                }
             });
-        });
+        }, { threshold: 0, rootMargin: '400px 0px' });
+        frames.forEach((f) => io.observe(f));
     }
 
     // --------------------------------------------------------------------
