@@ -115,7 +115,7 @@ async function readLeads({ since } = {}) {
 }
 
 function leadsToCsv(leads) {
-    const columns = ['timestamp', 'source', 'market', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'amo_status', 'ip'];
+    const columns = ['timestamp', 'source', 'market', 'site', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'amo_status', 'ip'];
     const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const rows = [columns.join(',')];
     for (const lead of leads) {
@@ -269,6 +269,7 @@ const server = http.createServer(async (req, res) => {
             timestamp: new Date().toISOString(),
             source: source || 'franch-landing',
             market: market || null,
+            site: site || null,
             name: name.trim(),
             phone: phoneDigits,
             format: resolvedFormat,
