@@ -9,8 +9,12 @@
     --c-purple-light: #A06DD4;   /* hover / tint          */
     --c-purple-deep:  #5A2A82;   /* pressed / dark        */
     --c-pink:         #ED2CEE;   /* hot accent / fuchsia  */
-    --c-gold:         #E5AE6A;   /* brandbook warm accent */
-    --c-gold-deep:    #A9742F;   /* gold on light bg      */
+    /* Real brandbook secondary palette (measured from PDF swatch, not
+       invented): #9972be main purple, #f4aeaa peach, #e780bc pink,
+       #c277b8 mauve. Using the pink as the warm accent that used to be a
+       fabricated gold — nothing in the actual brandbook is gold. */
+    --c-accent:       #E780BC;
+    --c-accent-deep:  #B85A93;
     --c-pink-light:   #F478F5;
     --c-pink-glow:    rgba(237, 44, 238, 0.22);
     --c-purple-glow:  rgba(124, 63, 174, 0.18);
@@ -123,13 +127,13 @@ a { color: inherit; text-decoration: none; }
 /* Focus ring — visible only for keyboard nav */
 :focus { outline: none; }
 :focus-visible {
-    outline: 2px solid var(--c-teal-deep);
+    outline: 2px solid var(--c-purple-deep);
     outline-offset: 3px;
     border-radius: 4px;
 }
 
 ::selection {
-    background: var(--c-teal-light);
+    background: var(--c-purple-light);
     color: var(--c-ink);
 }
 
@@ -165,16 +169,16 @@ a { color: inherit; text-decoration: none; }
     font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--c-gold-deep);
+    color: var(--c-accent-deep);
 }
 .h-eyebrow::before {
     content: '';
     width: 26px;
     height: 2px;
-    background: var(--c-gold);
+    background: var(--c-accent);
     flex-shrink: 0;
 }
-.is-dark .h-eyebrow { color: var(--c-gold); }
+.is-dark .h-eyebrow { color: var(--c-accent); }
 
 .h1 {
     font-family: var(--font-display);
@@ -1309,7 +1313,7 @@ a { color: inherit; text-decoration: none; }
     font-weight: 800;
     font-size: 15px;
     letter-spacing: 0.04em;
-    color: var(--c-gold);
+    color: var(--c-accent);
     padding-top: 3px;
     font-variant-numeric: tabular-nums;
 }
@@ -1328,7 +1332,7 @@ a { color: inherit; text-decoration: none; }
 .partner-note {
     margin-top: 32px;
     padding: 18px 22px;
-    border-left: 2px solid var(--c-gold);
+    border-left: 2px solid var(--c-accent);
     background: rgba(255, 255, 255, 0.04);
     font-size: 15px;
     line-height: 1.55;
@@ -2197,7 +2201,7 @@ body.modal-open { overflow: hidden; }
 .testdrive-stat-val {
     font-size: clamp(28px, 5vw, 40px);
     font-weight: 800;
-    color: var(--c-gold);
+    color: var(--c-accent);
     line-height: 1;
     letter-spacing: -0.03em;
     font-variant-numeric: tabular-nums;
@@ -2770,7 +2774,7 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
     margin-top: 12px;
     font-size: 13px;
     font-weight: 600;
-    color: var(--c-gold);
+    color: var(--c-accent);
     text-decoration: underline;
     text-underline-offset: 3px;
 }

@@ -7,6 +7,34 @@
     'use strict';
 
     const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // --------------------------------------------------------------------
+    // UTM capture — read on first load, persist in sessionStorage so a
+    // lead who arrived with tags still carries them if the tab is idle for
+    // a while or the query string gets dropped by some later navigation
+    // (anchor scrolls on this page never touch it, but better safe).
+    // --------------------------------------------------------------------
+    function captureUtm() {
+        const KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+        const params = new URLSearchParams(window.location.search);
+        const fromUrl = {};
+        let hasAny = false;
+        KEYS.forEach((k) => {
+            const v = params.get(k);
+            if (v) { fromUrl[k] = v; hasAny = true; }
+        });
+        if (hasAny) {
+            try { sessionStorage.setItem('utm_params', JSON.stringify(fromUrl)); } catch (e) {}
+            return fromUrl;
+        }
+        try {
+            const stored = sessionStorage.getItem('utm_params');
+            if (stored) return JSON.parse(stored);
+        } catch (e) {}
+        return {};
+    }
+    const utmParams = captureUtm();
+
     const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -710,6 +738,7 @@
             source:     'franch-landing',
             market:     'ru',
             site:       'franch',
+            ...utmParams,
         };
 
         const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxtUkvpbRA_6ChtFTAtEQOD-uWWTdrvlSHqKfVviY8PtxydIOTgO8g7OVc5Y-hRuwv6/exec';

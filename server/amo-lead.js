@@ -115,7 +115,7 @@ async function readLeads({ since } = {}) {
 }
 
 function leadsToCsv(leads) {
-    const columns = ['timestamp', 'source', 'market', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'amo_status', 'ip'];
+    const columns = ['timestamp', 'source', 'market', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'amo_status', 'ip'];
     const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const rows = [columns.join(',')];
     for (const lead of leads) {
@@ -234,7 +234,8 @@ const server = http.createServer(async (req, res) => {
             return json(res, 400, { ok: false, error: 'invalid_json' }, origin);
         }
 
-        const { name, phone, format, budget, messenger, source, ads_consent, market, site } = data;
+        const { name, phone, format, budget, messenger, source, ads_consent, market, site,
+                utm_source, utm_medium, utm_campaign, utm_content, utm_term } = data;
 
         // Site-specific tags (only for sites that opt in via the `site` field —
         // KZ/UZ landings don't send it, so they're untouched).
@@ -273,6 +274,11 @@ const server = http.createServer(async (req, res) => {
             format: resolvedFormat,
             messenger: messenger || null,
             ads_consent: !!ads_consent,
+            utm_source: utm_source || null,
+            utm_medium: utm_medium || null,
+            utm_campaign: utm_campaign || null,
+            utm_content: utm_content || null,
+            utm_term: utm_term || null,
             ip,
         };
         await appendLead({ ...leadRecord, amo_status: 'pending' });
@@ -296,6 +302,11 @@ const server = http.createServer(async (req, res) => {
                 tags.push({ name: 'ИИ Сайты' });
                 tags.push({ name: SITE_TAGS[site] });
             }
+            if (utm_source)   tags.push({ name: `utm_source:${utm_source}` });
+            if (utm_medium)   tags.push({ name: `utm_medium:${utm_medium}` });
+            if (utm_campaign) tags.push({ name: `utm_campaign:${utm_campaign}` });
+            if (utm_content)  tags.push({ name: `utm_content:${utm_content}` });
+            if (utm_term)     tags.push({ name: `utm_term:${utm_term}` });
 
             await amoPost('/leads', [{
                 name: `Заявка — ${resolvedFormat}`,
