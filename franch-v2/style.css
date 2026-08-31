@@ -2738,7 +2738,7 @@ section:nth-of-type(even):not(.hero):not(.section--plain) {
 }
 .video-play:hover { transform: translate(-50%, -50%) scale(1.08); background: #fff; }
 /* No YouTube id yet — visibly disabled rather than a dead-feeling click */
-.video-play[data-youtube-id=""] { opacity: 0.45; cursor: not-allowed; }
+.video-play[data-embed-src=""] { opacity: 0.45; cursor: not-allowed; }
 .video-card.is-playing .video-play,
 .video-card.is-playing .video-card-body { display: none; }
 
