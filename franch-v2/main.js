@@ -35,6 +35,19 @@
     }
     const utmParams = captureUtm();
 
+    // --------------------------------------------------------------------
+    // Yandex.Metrika goals — counter 82675954 (see index.html head).
+    // Fires silently if ym isn't loaded yet (adblock, slow network) or the
+    // matching goal hasn't been created in the Metrika UI — reachGoal on an
+    // unknown name is a no-op there, not an error.
+    // --------------------------------------------------------------------
+    const YM_COUNTER = 82675954;
+    function trackGoal(name, params) {
+        if (typeof window.ym !== 'function') return;
+        try { window.ym(YM_COUNTER, 'reachGoal', name, params || {}); } catch (e) {}
+    }
+
+
     const isDesktop = () => window.matchMedia('(min-width: 1024px)').matches;
     const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
@@ -472,6 +485,12 @@
         const openModal = (formatName, ctaTitle, ctaSubtitle) => {
             overlay.classList.add('is-open');
             document.body.classList.add('modal-open');
+
+            trackGoal('modal_open', { cta: ctaTitle || 'default' });
+            const title = ctaTitle || '';
+            if (/тест-драйв/i.test(title)) trackGoal('cta_testdrive');
+            else if (/расч[её]т прибыли/i.test(title)) trackGoal('cta_calc_profit', { format: formatName || '' });
+            else if (/договор/i.test(title)) trackGoal('cta_contract');
             const ff = document.getElementById('modalFormatField');
             if (ff) ff.value = formatName || '';
             if (modalTitleEl) modalTitleEl.textContent = ctaTitle || defaultTitle;
@@ -780,6 +799,8 @@
             form.style.display = 'none';
             if (successEl) successEl.classList.add('is-active');
             showToast('Заявка отправлена — ответим в течение 30 минут');
+
+            trackGoal('lead_submit', { source: payload.source, format: payload.format || '' });
 
             if (window.dataLayer) {
                 window.dataLayer.push({ event: 'lead_submit', source: payload.source, format: payload.format });
