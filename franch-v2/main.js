@@ -36,12 +36,12 @@
     const utmParams = captureUtm();
 
     // --------------------------------------------------------------------
-    // Yandex.Metrika goals — counter 82675954 (see index.html head).
+    // Yandex.Metrika goals — counter 108324793 (see index.html head).
     // Fires silently if ym isn't loaded yet (adblock, slow network) or the
     // matching goal hasn't been created in the Metrika UI — reachGoal on an
     // unknown name is a no-op there, not an error.
     // --------------------------------------------------------------------
-    const YM_COUNTER = 82675954;
+    const YM_COUNTER = 108324793;
     function trackGoal(name, params) {
         if (typeof window.ym !== 'function') return;
         try { window.ym(YM_COUNTER, 'reachGoal', name, params || {}); } catch (e) {}
