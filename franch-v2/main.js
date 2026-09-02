@@ -63,7 +63,6 @@
         initCounters();
         initParallax();
         initPathAnimation();
-        initCasesSlider();
         initVideoTestimonials();
         initFAQ();
         initCustomCursor();
@@ -412,40 +411,6 @@
             });
         }, { threshold: 0, rootMargin: '400px 0px' });
         frames.forEach((f) => io.observe(f));
-    }
-
-    // --------------------------------------------------------------------
-    // Cases slider — arrow buttons
-    // --------------------------------------------------------------------
-    function initCasesSlider() {
-        const track = document.getElementById('casesTrack');
-        const prev = document.getElementById('casesPrev');
-        const next = document.getElementById('casesNext');
-        if (!track || !prev || !next) return;
-
-        const cardWidth = () => {
-            const card = track.querySelector('.case-card');
-            if (!card) return 380;
-            const style = getComputedStyle(track);
-            const gap = parseFloat(style.gap) || 20;
-            return card.offsetWidth + gap;
-        };
-
-        const updateButtons = () => {
-            prev.disabled = track.scrollLeft <= 4;
-            next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 4;
-        };
-
-        prev.addEventListener('click', () => {
-            track.scrollBy({ left: -cardWidth(), behavior: isReducedMotion ? 'auto' : 'smooth' });
-        });
-        next.addEventListener('click', () => {
-            track.scrollBy({ left: cardWidth(), behavior: isReducedMotion ? 'auto' : 'smooth' });
-        });
-
-        track.addEventListener('scroll', updateButtons, { passive: true });
-        window.addEventListener('resize', updateButtons);
-        updateButtons();
     }
 
     // --------------------------------------------------------------------
