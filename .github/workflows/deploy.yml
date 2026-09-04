@@ -34,6 +34,9 @@ jobs:
             export AMO_PIPELINE_ID_RU='${{ secrets.AMO_PIPELINE_ID_RU }}'
             export AMO_RESPONSIBLE_USER_ID_RU='${{ secrets.AMO_RESPONSIBLE_USER_ID_RU }}'
             export ALLOWED_ORIGINS='https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru'
+            export GOOGLE_SA_EMAIL='${{ secrets.GOOGLE_SA_EMAIL }}'
+            export GOOGLE_SA_PRIVATE_KEY='${{ secrets.GOOGLE_SA_PRIVATE_KEY }}'
+            export GOOGLE_SHEET_ID='${{ secrets.GOOGLE_SHEET_ID }}'
 
             if [ -n "$AMO_TOKEN" ]; then
               pm2 restart amo-lead --update-env || pm2 start npm --name amo-lead --update-env -- start

@@ -743,18 +743,10 @@
             ...utmParams,
         };
 
-        const SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxtUkvpbRA_6ChtFTAtEQOD-uWWTdrvlSHqKfVviY8PtxydIOTgO8g7OVc5Y-hRuwv6/exec';
-
         try {
-            // Send to Google Sheets (no-cors requires text/plain for simple request)
-            await fetch(SHEETS_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain' },
-                body: JSON.stringify(payload),
-            });
-
-            // Also send to AMO when server is configured (silent fail if not ready)
+            // Sends to AMO + local log + Google Sheets server-side (server/amo-lead.js).
+            // Silent fail if server isn't ready — local jsonl on the server is the
+            // source of truth either way.
             fetch('/api/lead', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

@@ -16,6 +16,9 @@ const {
     META_PIXEL_ID = '2113481812884524',
     META_CAPI_TOKEN,
     META_TEST_EVENT_CODE,
+    GOOGLE_SA_EMAIL,
+    GOOGLE_SA_PRIVATE_KEY,
+    GOOGLE_SHEET_ID,
     PORT = '3001',
     ALLOWED_ORIGINS = 'https://4you.4hands.ru,https://franchbeaty.ru,https://www.franchbeaty.ru',
     LEADS_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'data', 'leads.jsonl'),
@@ -158,6 +161,114 @@ async function sendMetaLead({ phoneDigits, ip, userAgent, sourceUrl }) {
     }
 }
 
+// ── Google Sheets export (service account — server-to-server JWT auth, no
+// interactive OAuth consent screen) ─────────────────────────────────────────
+let sheetsAccessToken = null;
+let sheetsAccessTokenExpiry = 0;
+let sheetsTabTitle = null;
+let sheetsHeaderEnsured = false;
+
+function base64url(buf) {
+    return Buffer.from(buf).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+async function getGoogleAccessToken() {
+    if (sheetsAccessToken && Date.now() < sheetsAccessTokenExpiry - 60_000) {
+        return sheetsAccessToken;
+    }
+    // Secret managers sometimes flatten real newlines to literal "\n" — normalize either form.
+    const privateKey = GOOGLE_SA_PRIVATE_KEY.replace(/\\n/g, '\n');
+    const now = Math.floor(Date.now() / 1000);
+    const signInput = [
+        base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' })),
+        base64url(JSON.stringify({
+            iss: GOOGLE_SA_EMAIL,
+            scope: 'https://www.googleapis.com/auth/spreadsheets',
+            aud: 'https://oauth2.googleapis.com/token',
+            exp: now + 3600,
+            iat: now,
+        })),
+    ].join('.');
+    const signature = crypto.createSign('RSA-SHA256').update(signInput).sign(privateKey);
+    const jwt = `${signInput}.${base64url(signature)}`;
+
+    const resp = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+            assertion: jwt,
+        }),
+    });
+    if (!resp.ok) throw new Error(`Google token error ${resp.status}: ${await resp.text()}`);
+
+    const { access_token, expires_in } = await resp.json();
+    sheetsAccessToken = access_token;
+    sheetsAccessTokenExpiry = Date.now() + expires_in * 1000;
+    return sheetsAccessToken;
+}
+
+async function getSheetTabTitle(token) {
+    if (sheetsTabTitle) return sheetsTabTitle;
+    const resp = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}?fields=sheets.properties`,
+        { headers: { Authorization: `Bearer ${token}` } },
+    );
+    if (!resp.ok) throw new Error(`Sheets metadata error ${resp.status}: ${await resp.text()}`);
+    const { sheets } = await resp.json();
+    sheetsTabTitle = sheets?.[0]?.properties?.title || 'Sheet1';
+    return sheetsTabTitle;
+}
+
+const SHEET_COLUMNS = ['timestamp', 'source', 'market', 'site', 'name', 'phone', 'format', 'messenger', 'ads_consent', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ip'];
+
+// Writes a header row once per process lifetime if the sheet is empty —
+// makes a freshly created spreadsheet self-documenting without manual setup.
+async function ensureSheetHeader(token, tab) {
+    if (sheetsHeaderEnsured) return;
+    sheetsHeaderEnsured = true; // set upfront: never retry every single lead, even on failure below
+
+    const checkResp = await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/${encodeURIComponent(tab)}!A1:A1`,
+        { headers: { Authorization: `Bearer ${token}` } },
+    );
+    const data = checkResp.ok ? await checkResp.json() : {};
+    if (data.values?.[0]?.[0]) return; // header (or data) already present
+
+    await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/${encodeURIComponent(tab)}!A1?valueInputOption=RAW`,
+        {
+            method: 'PUT',
+            headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ values: [SHEET_COLUMNS] }),
+        },
+    );
+}
+
+// Fire-and-forget: independent of AMO — a lead that fails here is still safe
+// in data/leads.jsonl, written before this is ever called.
+async function appendToSheet(record) {
+    if (!GOOGLE_SA_EMAIL || !GOOGLE_SA_PRIVATE_KEY || !GOOGLE_SHEET_ID) return;
+    try {
+        const token = await getGoogleAccessToken();
+        const tab = await getSheetTabTitle(token);
+        await ensureSheetHeader(token, tab);
+
+        const row = SHEET_COLUMNS.map(c => record[c] ?? '');
+        const resp = await fetch(
+            `https://sheets.googleapis.com/v4/spreadsheets/${GOOGLE_SHEET_ID}/values/${encodeURIComponent(tab)}!A:A:append?valueInputOption=USER_ENTERED`,
+            {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify({ values: [row] }),
+            },
+        );
+        if (!resp.ok) console.error('Sheets append error:', resp.status, await resp.text());
+    } catch (err) {
+        console.error('Sheets append failed:', err.message);
+    }
+}
+
 function setCors(res, origin) {
     // Only allow requests from our own domains
     if (allowedOrigins.includes(origin)) {
@@ -237,9 +348,10 @@ const server = http.createServer(async (req, res) => {
         const { name, phone, format, budget, messenger, source, ads_consent, market, site,
                 utm_source, utm_medium, utm_campaign, utm_content, utm_term } = data;
 
-        // Site-specific tags (only for sites that opt in via the `site` field —
-        // KZ/UZ landings don't send it, so they're untouched).
-        const SITE_TAGS = { franch: 'franch', 'salon-krasoty': 'salon krasoty' };
+        // Site-specific tag (only for sites that opt in via the `site` field —
+        // KZ/UZ landings don't send it, so they're untouched). One tag per site,
+        // UTM tags below carry the rest of the attribution detail.
+        const SITE_TAGS = { franch: 'ИИ сайт', 'salon-krasoty': 'ИИ сайт' };
         const resolvedFormat = format || budget || 'франшиза';
 
         // Per-market pipeline routing. Each market falls back to the default
@@ -283,6 +395,7 @@ const server = http.createServer(async (req, res) => {
             ip,
         };
         await appendLead({ ...leadRecord, amo_status: 'pending' });
+        appendToSheet(leadRecord);
 
         try {
             // 1. Create contact
@@ -300,7 +413,6 @@ const server = http.createServer(async (req, res) => {
             if (ads_consent) tags.push({ name: 'ads_consent' });
             if (market) tags.push({ name: `market:${market}` });
             if (SITE_TAGS[site]) {
-                tags.push({ name: 'ИИ Сайты' });
                 tags.push({ name: SITE_TAGS[site] });
             }
             if (utm_source)   tags.push({ name: `utm_source:${utm_source}` });
